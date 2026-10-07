@@ -175,7 +175,7 @@ T007 fixture.)*
   `estimateShares(1002n, 0n, 0n)` → `2n`; plus floor-rounding round-trips
   (`estimateWithdraw(estimateShares(x,...),...) <= x`) and `sharePriceScaled18` null at
   bootstrap. Verify: `cd web && npm test && npm run typecheck && npm run lint && npm run build`
-- [ ] T018 [P] Create `web/src/lib/errors.ts` (decode `ZeroAmount`, `ZeroShares`,
+- [X] T018 [P] Create `web/src/lib/errors.ts` (decode `ZeroAmount`, `ZeroShares`,
   `AmountTooSmall`, `TransferFailed`, `Reentrancy`, `CooldownActive(availableAt)`,
   OpenZeppelin `ERC20InsufficientAllowance` (allowance race) and `ERC20InsufficientBalance`
   with actionable messages, user rejection (4001/`UserRejectedRequestError`), insufficient
