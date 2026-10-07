@@ -4,7 +4,6 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Solidity](https://img.shields.io/badge/solidity-0.8.31-363636.svg)](https://docs.soliditylang.org/en/latest/)
 [![Live demo](https://img.shields.io/badge/live-demo-ff69b4.svg)](https://tokenized-vault.vercel.app)
-[![Tests](https://img.shields.io/badge/tests-passing-brightgreen.svg)](#verification)
 
 > **⚠️ Educational / testnet demo.** This project is an unaudited demonstration built for
 > learning and testing on Anvil (31337) and Sepolia (11155111). It is **not for mainnet use
@@ -20,6 +19,7 @@
 - [Features](#features)
 - [Architecture](#architecture)
 - [Design notes](#design-notes)
+- [Known limitations](#known-limitations)
 - [Quickstart](#quickstart)
 - [Verification](#verification)
 - [Screenshots](#screenshots)
@@ -30,10 +30,13 @@
 
 ## Overview
 
-A minimal ERC-4626-style tokenized vault: deposit an ERC-20 token, receive non-transferable
+An ERC-4626-**inspired** tokenized vault: deposit an ERC-20 token, receive non-transferable
 shares priced by `vault balance / totalSupply`, withdraw back to tokens, and claim test tokens
-from a cooldown faucet. The frontend is a Vite + React + TypeScript (strict) single-page app
-using wagmi v2, viem, and a custom connect modal — no RainbowKit or ConnectKit.
+from a cooldown faucet. It is **not ERC-4626 compliant** — shares are not an ERC-20 token and
+the vault exposes no `preview*`/`convert*` view functions; the resemblance is limited to the
+deposit→shares→withdraw shape. The frontend is a Vite + React + TypeScript (strict)
+single-page app using wagmi v2, viem, and a custom connect modal — no RainbowKit or
+ConnectKit.
 
 ## Features
 
@@ -95,18 +98,36 @@ wallet's active chain.
   amount the depositor authorized.
 - 1000 **BASE UNITS** of dead shares protect against first-depositor inflation attacks: the
   first deposit mints 1000 base units (not whole tokens) to `0xdead…dead`, so a later donor
-  cannot skew the share price (FR-029/FR-030).
+  cannot skew the share price.
+
+## Known limitations
+
+- Shares are **non-transferable**: an internal ledger only — they cannot be sent, traded,
+  or approved.
+- **Fee-on-transfer and rebasing tokens are unsupported**; deposits assume transfers move
+  exactly the requested amount.
+- The contracts are **unaudited** — a learning demo, not production code.
+- **Testnet/local only**: Anvil (31337) and Sepolia (11155111); never mainnet with real
+  funds.
+- With `VITE_SEPOLIA_RPC_URL` unset, the site falls back to a **public Sepolia RPC that may
+  rate-limit** under load.
+- The **activity feed reads logs from the contract's deploy block** (chunked `getLogs`,
+  newest 20 Deposit/Withdraw events); events outside that window are not listed.
 
 ## Quickstart
 
-Happy path — five lines (Foundry + Node 24 installed, `anvil` running in a second terminal):
+Prerequisites: Foundry and Node 24 installed. Start an Anvil node in a **second terminal**
+(`anvil`), then run the happy path below — every line is executed from the repo root:
 
 ```bash
 git clone --recursive https://github.com/MohammedSoliman10/tokenized-vault.git
-cd tokenized-vault/web && npm install
-cd ../contracts && forge test
-./scripts/deploy-anvil.sh && node scripts/sync-deployments.mjs
-cd web && npm run dev
+cd tokenized-vault
+
+(cd web && npm install)            # frontend dependencies
+(cd contracts && forge test)       # contracts suite (30 tests)
+./scripts/deploy-anvil.sh          # FaucetToken + Vault → the Anvil node
+node scripts/sync-deployments.mjs  # write addresses + ABIs for the frontend
+cd web && npm run dev              # dev server → http://localhost:5173
 ```
 
 Full scenarios (Sepolia deploys, secret hygiene, CI expectations, Definition of Done):
@@ -135,7 +156,7 @@ except the mobile shot (360 px viewport).
 | ![Connected dashboard after the faucet claim](docs/images/dashboard-connected.png) | US1/US4: connected header, six-stat dashboard, 1000-token claim with live cooldown countdown |
 | ![First deposit success](docs/images/deposit-success.png) | US2: first deposit of 1001 base units accepted — share price exactly `1`, your share `0.0999%`, event-derived success copy, own feed row |
 | ![Live activity after an external deposit](docs/images/activity-feed.png) | US5: a second account deposited 200 via `cast` — TVL `250`, your share `19.9999%`, newest row arrived live, plain tx hashes (no explorer links on Anvil) |
-| ![Wrong-network banner](docs/images/wrong-network.png) | FR-003: wallet on an unsupported network — amber banner with switch CTA, every action disabled |
+| ![Wrong-network banner](docs/images/wrong-network.png) | Wallet on an unsupported network — amber banner with switch CTA, every action disabled |
 | ![Mobile layout at 360 px](docs/images/mobile-360.png) | Narrow viewport: two-column stats, stacked forms, activity table scrolls inside its own container — no page-level horizontal overflow |
 
 ## Deployment
