@@ -42,7 +42,7 @@ validation) → final manual publishing gate.
 
 **Purpose**: Initialize the `web/` package so all later tasks have a green baseline.
 
-- [ ] T001 Scaffold the web package with strict TS and lint from day one: create
+- [X] T001 Scaffold the web package with strict TS and lint from day one: create
   `web/package.json` (scripts: `dev`, `build`, `preview`, `typecheck`, `lint`; deps pinned
   per plan.md: vite, react 18, react-dom, typescript, wagmi v2, viem,
   @tanstack/react-query, @radix-ui/react-dialog, tailwindcss, @tailwindcss/vite,
