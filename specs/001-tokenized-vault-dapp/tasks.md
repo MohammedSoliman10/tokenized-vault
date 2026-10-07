@@ -240,7 +240,7 @@ explanations; wallet rejection shows "cancelled" with no stuck spinner.
   source and one invalidation path for balance/allowance reads (no duplicate fetch paths;
   invalidation after receipts flows from T021).
   Verify: `cd web && npm run typecheck && npm run lint && npm run build`
-- [ ] T024 [US2] Create `web/src/hooks/useDeposit.ts`: state machine
+- [X] T024 [US2] Create `web/src/hooks/useDeposit.ts`: state machine
   `idle → approving → depositing → success | error` per data-model §2.2 — exact-amount
   `approve(vault, amount)` (NEVER unlimited), wait for approval receipt before `deposit`,
   skip `approving` when `allowance >= amount` (FR-011), **re-validate the allowance

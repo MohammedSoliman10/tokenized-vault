@@ -8,13 +8,18 @@ import deploymentsJson from '../config/deployments.json'
 import { sharePriceScaled18, userShareBps } from '../lib/vaultMath'
 
 /** Address/URLs come from config only (constitution V / FR-028). */
-interface DeploymentEntry {
+export interface DeploymentEntry {
   faucetToken: Address
   vault: Address
   deployBlock: number
 }
 
 const deployments = deploymentsJson as Partial<Record<string, DeploymentEntry>>
+
+/** Config lookup shared by read + write hooks — one address source (FR-028). */
+export function getDeployment(chainId: number): DeploymentEntry | undefined {
+  return deployments[String(chainId)]
+}
 
 const ZERO_ADDRESS: Address = '0x0000000000000000000000000000000000000000'
 
