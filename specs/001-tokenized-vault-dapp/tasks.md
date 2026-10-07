@@ -133,7 +133,7 @@ T007 fixture.)*
   Verify: `cd contracts && forge build && PRIVATE_KEY=0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 forge script script/Deploy.s.sol && forge test`
   (public Anvil/Hardhat key #0 — local simulation only; the real Sepolia key stays in
   gitignored `contracts/.env`)
-- [ ] T012 [P] Create shell wrappers `scripts/deploy-anvil.sh` (`set -euo pipefail`,
+- [X] T012 [P] Create shell wrappers `scripts/deploy-anvil.sh` (`set -euo pipefail`,
   exports the public Anvil account #0 key, runs forge script with
   `--rpc-url http://127.0.0.1:8545 --broadcast`) and `scripts/deploy-sepolia.sh`
   (loads `contracts/.env` via `set -a; source contracts/.env; set +a`; NO `set -x`, NO echo
