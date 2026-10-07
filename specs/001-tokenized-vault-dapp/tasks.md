@@ -286,7 +286,7 @@ stats update; Max fills full balance; zero/over-balance blocked; rejection cance
 **Independent Test**: Eligible address claims → +1000 VTT balance; immediate second claim
 blocked with remaining-time countdown; rejection cancels without changing cooldown.
 
-- [ ] T028 [P] [US4] Create `web/src/hooks/useFaucetClaim.ts`: `idle → claiming → success |
+- [X] T028 [P] [US4] Create `web/src/hooks/useFaucetClaim.ts`: `idle → claiming → success |
   error`, cooldown derived from `nextClaimAt(account)` (0 ⇒ claimable), re-read after
   receipt; `CooldownActive` decode → countdown message (FR-006/FR-018).
   Verify: `cd web && npm run typecheck && npm run lint && npm run build`
