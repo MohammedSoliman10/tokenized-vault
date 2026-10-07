@@ -346,8 +346,9 @@ Repo gate command used below = `cd web && npm run typecheck && npm run lint && n
 - [ ] T035 Create `.github/workflows/ci.yml`: job `contracts` —
   `actions/checkout` with `submodules: recursive`, foundry-toolchain, `forge fmt --check`,
   `forge test`; job `web` — setup-node 20 with npm cache, `npm ci` in `web/`,
-  `npm run typecheck`, `npm run lint`, `npm run build`. (No deploy jobs, no secrets used.)
-  Verify: local equivalent of CI (must pass before committing): `cd contracts && forge fmt --check && forge test && cd ../web && npm run typecheck && npm run lint && npm run build`
+  `npm run typecheck`, `npm run lint`, `npm test`, `npm run build`. (No deploy jobs, no
+  secrets used.) Verify: local equivalent of CI (must pass before committing):
+  `cd contracts && forge fmt --check && forge test && cd ../web && npm run typecheck && npm run lint && npm test && npm run build`
 - [ ] T036 [P] Vercel CONFIG ONLY (no deploy — T040 gates it): create `web/vercel.json`
   (framework vite, install/build/output settings for `web/` root) and document required
   `VITE_*` env vars in `README.md` deployment section. Verify:
