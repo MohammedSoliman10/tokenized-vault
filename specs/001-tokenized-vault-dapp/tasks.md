@@ -308,13 +308,13 @@ Sepolia explorer links only.
 highlighted); Sepolia entries link to `sepolia.etherscan.io/tx/…`; Anvil entries show plain
 hashes with NO external link; failed fetch shows inline retry without blanking.
 
-- [ ] T030 [P] [US5] Create `web/src/hooks/useActivity.ts`: viem `getLogs` on Vault
+- [X] T030 [P] [US5] Create `web/src/hooks/useActivity.ts`: viem `getLogs` on Vault
   `Deposit`/`Withdraw` from `deployments.json` `deployBlock`, chunks ≤ 10,000 blocks with
   auto-halving on RPC range errors (min 1,000), dedupe by `(transactionHash, logIndex)`,
   sort block desc, keep newest 20 (FR-021/FR-023, research D11), plus
   `useWatchContractEvent` live appends; fetch failure → retryable error state (never blanks
   existing entries). Verify: `cd web && npm run typecheck && npm run lint && npm run build`
-- [ ] T031 [US5] Create `web/src/components/ActivityFeed.tsx` and wire into `web/src/App.tsx`:
+- [X] T031 [US5] Create `web/src/components/ActivityFeed.tsx` and wire into `web/src/App.tsx`:
   columns type/account(truncated, self highlighted)/amount/shares/relative time; explorer link
   ONLY for chainId 11155111, plain-hash rendering on 31337 (FR-022 — never a broken link).
   Verify: `cd web && npm run typecheck && npm run lint && npm run build`

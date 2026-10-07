@@ -1,3 +1,4 @@
+import { ActivityFeed } from './components/ActivityFeed'
 import { DepositForm } from './components/DepositForm'
 import { FaucetPanel } from './components/FaucetPanel'
 import { Header } from './components/Header'
@@ -22,6 +23,8 @@ function App() {
           <WithdrawForm />
           <FaucetPanel />
         </div>
+
+        <ActivityFeed />
       </main>
     </div>
   )
