@@ -373,7 +373,7 @@ Repo gate command used below = `cd web && npm run typecheck && npm run lint && n
   numbers observed.
   Verify: `./scripts/deploy-anvil.sh && node scripts/sync-deployments.mjs` exits 0 AND every
   walkthrough item above passes manually (record results in the PR description).
-- [ ] T039 Full quickstart validation (quickstart.md Scenarios 1–3 + Definition of Done):
+- [X] T039 Full quickstart validation (quickstart.md Scenarios 1–3 + Definition of Done):
   run the complete gate set and confirm all exit 0.
   Verify: `cd contracts && forge fmt --check && forge test && cd ../web && npm run typecheck && npm run lint && npm test && npm run build`
 - [ ] T040 **MANUAL — BLOCKED until owner explicitly says go**: publishing, executed
