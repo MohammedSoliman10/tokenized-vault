@@ -6,13 +6,13 @@ import {FaucetToken} from "../src/FaucetToken.sol";
 import {Vault} from "../src/Vault.sol";
 
 /// @title Deploy — deploys FaucetToken then Vault(faucetToken) (research D6)
-/// @notice The deployer key is read from the PRIVATE_KEY env var and NEVER logged;
-///         only the deployed addresses are printed.
+/// @notice The signer is resolved by forge itself and never embedded here:
+///         Sepolia via the PRIVATE_KEY env var (gitignored contracts/.env),
+///         local Anvil via `--unlocked --sender <account>`. Only the deployed
+///         addresses are printed.
 contract Deploy is Script {
     function run() external {
-        uint256 deployerKey = vm.envUint("PRIVATE_KEY"); // never logged
-
-        vm.startBroadcast(deployerKey);
+        vm.startBroadcast();
         FaucetToken faucetToken = new FaucetToken();
         Vault vault = new Vault(address(faucetToken));
         vm.stopBroadcast();
