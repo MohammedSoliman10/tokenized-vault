@@ -209,7 +209,7 @@ disabled actions (FR-003); connected → all six stats visible and chain-consist
   `web/src/components/WrongNetworkBanner.tsx` (persistent banner + "Switch network" CTA when
   `chainId ∉ {31337, 11155111}`; deposit/withdraw/faucet controls disabled — FR-003).
   Verify: `cd web && npm run typecheck && npm run lint && npm run build`
-- [ ] T021 [P] [US1] Create `web/src/hooks/useVaultStats.ts`: one `useReadContracts`
+- [X] T021 [P] [US1] Create `web/src/hooks/useVaultStats.ts`: one `useReadContracts`
   multicall (`Vault.totalSupply`, `Vault.balanceOf(user)`, `ERC20.balanceOf(vault)`,
   `ERC20.balanceOf(user)`, `ERC20.allowance(user, vault)`, `FaucetToken.nextClaimAt(user)`)
   producing the six stats (tvl, totalShares, sharePrice via `vaultMath` with null→placeholder
