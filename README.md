@@ -21,6 +21,7 @@
 - [Design notes](#design-notes)
 - [Quickstart](#quickstart)
 - [Verification](#verification)
+- [Screenshots](#screenshots)
 - [Deployment](#deployment)
 - [Contributing](#contributing)
 - [Security](#security)
@@ -120,6 +121,19 @@ cd ../web && npm run typecheck && npm run lint && npm test && npm run build
 ```
 
 CI runs the same commands on every push — see [.github/workflows/ci.yml](.github/workflows/ci.yml).
+
+## Screenshots
+
+Captured by the automated browser walkthrough against local Anvil (chain 31337). All views are
+1280×800 dark-theme except the mobile shot (360 px viewport).
+
+| Screenshot | What it shows |
+|---|---|
+| ![Connected dashboard after the faucet claim](docs/images/dashboard-connected.png) | US1/US4: connected header, six-stat dashboard, 1000-token claim with live cooldown countdown |
+| ![First deposit success](docs/images/deposit-success.png) | US2: first deposit of 1001 base units accepted — share price exactly `1`, your share `0.0999%`, event-derived success copy, own feed row |
+| ![Live activity after an external deposit](docs/images/activity-feed.png) | US5: a second account deposited 200 via `cast` — TVL `250`, your share `19.9999%`, newest row arrived live, plain tx hashes (no explorer links on Anvil) |
+| ![Wrong-network banner](docs/images/wrong-network.png) | FR-003: wallet on an unsupported network — amber banner with switch CTA, every action disabled |
+| ![Mobile layout at 360 px](docs/images/mobile-360.png) | Narrow viewport: two-column stats, stacked forms, activity table scrolls inside its own container — no page-level horizontal overflow |
 
 ## Deployment
 

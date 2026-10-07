@@ -361,7 +361,7 @@ Repo gate command used below = `cd web && npm run typecheck && npm run lint && n
   `grep -r` also matches gitignored vendor/build trees and can never pass).
   If `FAIL`, find and remove the leak, then re-run. Verify: re-run both
   commands → `OK` twice.
-- [ ] T038 Anvil end-to-end demo run (quickstart.md Scenario 4, manual): start `anvil`, run
+- [X] T038 Anvil end-to-end demo run (quickstart.md Scenario 4, manual): start `anvil`, run
   `./scripts/deploy-anvil.sh`, `node scripts/sync-deployments.mjs`,
   `cd contracts && forge build && cd .. && node scripts/sync-abis.mjs`,
   `cd web && npm run dev`; walk US1–US5: connect modal, network switch + wrong-network
