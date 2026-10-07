@@ -3,7 +3,7 @@ import { useAccount } from 'wagmi'
 
 import { useFaucetClaim } from '../hooks/useFaucetClaim'
 import { useVaultStats } from '../hooks/useVaultStats'
-import { formatTokenAmount } from '../lib/format'
+import { formatTokenAmountExact } from '../lib/format'
 import { requestWalletConnect } from './WalletModal'
 import { useWrongNetwork } from './WrongNetworkBanner'
 
@@ -110,7 +110,7 @@ export function FaucetPanel() {
           className="mt-3 rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-3 py-2 text-xs text-emerald-200"
         >
           {outcome
-            ? `Claimed ${formatTokenAmount(outcome.amount)} tokens — balance updated.`
+            ? `Claimed ${formatTokenAmountExact(outcome.amount)} tokens — balance updated.`
             : 'Claim confirmed.'}
           <button
             type="button"

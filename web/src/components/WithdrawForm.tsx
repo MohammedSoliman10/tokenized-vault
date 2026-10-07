@@ -4,7 +4,7 @@ import { useAccount } from 'wagmi'
 
 import { useVaultStats } from '../hooks/useVaultStats'
 import { useWithdraw } from '../hooks/useWithdraw'
-import { formatTokenAmount } from '../lib/format'
+import { formatTokenAmountExact } from '../lib/format'
 import { estimateWithdraw } from '../lib/vaultMath'
 import { requestWalletConnect } from './WalletModal'
 import { useWrongNetwork } from './WrongNetworkBanner'
@@ -28,7 +28,7 @@ function guardMessage(parsed: Parsed, userShares: bigint | null): string | null 
   const shares = parsed.value
   if (shares === 0n) return 'Enter an amount greater than zero.'
   if (userShares !== null && shares > userShares) {
-    return `Amount exceeds your share balance — you can withdraw up to ${formatTokenAmount(userShares)} shares.`
+    return `Amount exceeds your share balance — you can withdraw up to ${formatTokenAmountExact(userShares)} shares.`
   }
   return null
 }
@@ -111,7 +111,7 @@ export function WithdrawForm() {
 
       <p className="mt-2 min-h-4 text-xs text-gray-400" aria-live="polite">
         {estimate !== null && estimate > 0n
-          ? `≈ ${formatTokenAmount(estimate)} tokens`
+          ? `≈ ${formatTokenAmountExact(estimate)} tokens`
           : roundsToZero
             ? 'That amount rounds to zero shares — try a larger amount.'
             : '\u00A0'}
@@ -156,7 +156,7 @@ export function WithdrawForm() {
           className="mt-3 rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-3 py-2 text-xs text-emerald-200"
         >
           {outcome
-            ? `Withdrew ${formatTokenAmount(outcome.shares)} shares → received ${formatTokenAmount(outcome.amount)} tokens.`
+            ? `Withdrew ${formatTokenAmountExact(outcome.shares)} shares → received ${formatTokenAmountExact(outcome.amount)} tokens.`
             : 'Withdraw confirmed.'}
           <button
             type="button"

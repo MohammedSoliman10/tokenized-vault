@@ -1,7 +1,7 @@
 import { useAccount } from 'wagmi'
 
 import { useVaultStats } from '../hooks/useVaultStats'
-import { formatTokenAmount } from '../lib/format'
+import { formatTokenAmountExact } from '../lib/format'
 
 interface StatCardProps {
   label: string
@@ -44,7 +44,7 @@ export function StatsGrid() {
   const connected = address !== undefined
 
   const publicValue = (value: bigint | null, decimals?: number): string | undefined =>
-    value !== null ? formatTokenAmount(value, decimals) : undefined
+    value !== null ? formatTokenAmountExact(value, decimals) : undefined
 
   const userPlaceholder = 'Connect wallet'
 

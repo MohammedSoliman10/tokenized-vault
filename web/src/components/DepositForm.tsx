@@ -6,7 +6,7 @@ import { useDeposit } from '../hooks/useDeposit'
 import { useTokenBalance } from '../hooks/useTokenBalance'
 import { useVaultStats } from '../hooks/useVaultStats'
 import { DEAD_SHARES, estimateShares } from '../lib/vaultMath'
-import { formatTokenAmount } from '../lib/format'
+import { formatTokenAmountExact } from '../lib/format'
 import { requestWalletConnect } from './WalletModal'
 import { useWrongNetwork } from './WrongNetworkBanner'
 
@@ -127,7 +127,7 @@ export function DepositForm() {
 
       <p className="mt-2 min-h-4 text-xs text-gray-400" aria-live="polite">
         {estimate !== null && estimate > 0n
-          ? `≈ ${formatTokenAmount(estimate)} shares`
+          ? `≈ ${formatTokenAmountExact(estimate)} shares`
           : amount !== null && amount > 0n && estimate === 0n
             ? 'That amount rounds to zero shares — try a larger amount.'
             : '\u00A0'}
@@ -204,7 +204,7 @@ export function DepositForm() {
           className="mt-3 rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-3 py-2 text-xs text-emerald-200"
         >
           {outcome
-            ? `Deposited ${formatTokenAmount(outcome.amount)} tokens → minted ${formatTokenAmount(outcome.shares)} shares.`
+            ? `Deposited ${formatTokenAmountExact(outcome.amount)} tokens → minted ${formatTokenAmountExact(outcome.shares)} shares.`
             : 'Deposit confirmed.'}
           <button
             type="button"

@@ -35,6 +35,23 @@ export function formatTokenAmount(value: bigint, decimals = 18, maxFractionDigit
   return negative ? `-${text}` : text
 }
 
+/**
+ * Like `formatTokenAmount`, but a NONZERO value never renders as `"0"`
+ * (ui-contracts §8 — no `undefined`/fake-zero display): expands the fraction
+ * (up to `decimals` digits) until one significant digit shows.
+ * `1n` → `"0.000000000000000001"`, `1000e18` → `"1000"`, `0n` → `"0"`.
+ */
+export function formatTokenAmountExact(value: bigint, decimals = 18): string {
+  if (value === 0n) return '0'
+  const at4 = formatTokenAmount(value, decimals, 4)
+  if (at4 !== '0') return at4
+  for (let digits = 5; digits <= decimals; digits += 1) {
+    const text = formatTokenAmount(value, decimals, digits)
+    if (text !== '0') return text
+  }
+  return formatTokenAmount(value, decimals, decimals)
+}
+
 const UNITS: ReadonlyArray<readonly [ms: number, name: string]> = [
   [86_400_000, 'day'],
   [3_600_000, 'hour'],
