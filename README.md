@@ -3,13 +3,14 @@
 [![CI](https://github.com/MohammedSoliman10/tokenized-vault/actions/workflows/ci.yml/badge.svg)](https://github.com/MohammedSoliman10/tokenized-vault/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Solidity](https://img.shields.io/badge/solidity-0.8.31-363636.svg)](https://docs.soliditylang.org/en/latest/)
+[![Live demo](https://img.shields.io/badge/live-demo-ff69b4.svg)](https://tokenized-vault.vercel.app)
 [![Tests](https://img.shields.io/badge/tests-passing-brightgreen.svg)](#verification)
 
 > **⚠️ Educational / testnet demo.** This project is an unaudited demonstration built for
 > learning and testing on Anvil (31337) and Sepolia (11155111). It is **not for mainnet use
 > with real funds**. No security audit has been performed; expect bugs.
 
-**Live demo**: _added after deployment_ (pending — see [Deployment](#deployment)).
+**Live demo**: https://tokenized-vault.vercel.app
 
 ---
 
@@ -124,11 +125,13 @@ CI runs the same commands on every push — see [.github/workflows/ci.yml](.gith
 
 ## Screenshots
 
-Captured by the automated browser walkthrough against local Anvil (chain 31337). All views are
-1280×800 dark-theme except the mobile shot (360 px viewport).
+The first shot is the **live production site**; the rest were captured by the automated
+browser walkthrough against local Anvil (chain 31337). All views are 1280×800 dark-theme
+except the mobile shot (360 px viewport).
 
 | Screenshot | What it shows |
 |---|---|
+| ![Live production dashboard on Sepolia](docs/images/live-sepolia.png) | **Live site on Sepolia**: disconnected visitor reads TVL `50`, share price `1`, and the Deposit/Withdraw activity rows with working `sepolia.etherscan.io` tx links |
 | ![Connected dashboard after the faucet claim](docs/images/dashboard-connected.png) | US1/US4: connected header, six-stat dashboard, 1000-token claim with live cooldown countdown |
 | ![First deposit success](docs/images/deposit-success.png) | US2: first deposit of 1001 base units accepted — share price exactly `1`, your share `0.0999%`, event-derived success copy, own feed row |
 | ![Live activity after an external deposit](docs/images/activity-feed.png) | US5: a second account deposited 200 via `cast` — TVL `250`, your share `19.9999%`, newest row arrived live, plain tx hashes (no explorer links on Anvil) |
@@ -137,21 +140,38 @@ Captured by the automated browser walkthrough against local Anvil (chain 31337).
 
 ## Deployment
 
-Deployment is config-only until the owner initiates it (T040): [`web/vercel.json`](web/vercel.json)
-declares the Vite framework, install/build commands, and `dist` output for the `web/` root.
+### Live site (Vercel)
 
-In the Vercel project settings:
+Production: **https://tokenized-vault.vercel.app** — Vercel **Root Directory**: `web`,
+built via [`web/vercel.json`](web/vercel.json) (Vite framework, install/build commands,
+`dist` output). The Vercel project connects to this repository with `main` as the
+production branch; deployment protection is off so the demo is publicly reachable.
 
-- **Root Directory**: `web`
-- **Environment variables** (both optional — the app degrades gracefully without them):
+Environment variables (both optional — the app degrades gracefully without them):
 
-  | Variable | Purpose |
-  |----------|---------|
-  | `VITE_SEPOLIA_RPC_URL` | Custom Sepolia RPC; falls back to a public RPC when unset |
-  | `VITE_REOWN_PROJECT_ID` | Enables the WalletConnect option in the connect modal (injected wallets always work) |
+| Variable | Purpose |
+|----------|---------|
+| `VITE_SEPOLIA_RPC_URL` | Custom Sepolia RPC; falls back to a public RPC when unset |
+| `VITE_REOWN_PROJECT_ID` | Enables the WalletConnect option in the connect modal (injected wallets always work) |
 
-Environment values belong in Vercel/dashboard `.env` files only — never committed (the repo
-gitignores `.env*` and CI ships no secrets).
+The current production deployment sets **neither**: reads use the public RPC fallback and
+the connect modal offers injected wallets only. Environment values belong in
+Vercel/dashboard `.env` files only — never committed (the repo gitignores `.env*` and CI
+ships no secrets).
+
+### Sepolia contract addresses (chain 11155111)
+
+Deployed by [`scripts/deploy-sepolia.sh`](scripts/deploy-sepolia.sh) at deploy block
+`11865644`; both sources are verified on Etherscan:
+
+| Contract | Address | Notes |
+|----------|---------|-------|
+| `FaucetToken` | [`0x8f6BaF9e021a57dddb2A70E7e186e6Ffb6f000f3`](https://sepolia.etherscan.io/address/0x8f6baf9e021a57dddb2a70e7e186e6ffb6f000f3) | "Vault Test Token" (`VTT`), 1000-token faucet |
+| `Vault` | [`0xBF27A9d9b4f636783B1b19D94b7D1BE4e51998B0`](https://sepolia.etherscan.io/address/0xbf27a9d9b4f636783b1b19d94b7d1be4e51998b0) | `vault.token()` → the `FaucetToken` above |
+
+`scripts/sync-deployments.mjs` mirrors both addresses and the deploy block into
+[`web/src/config/deployments.json`](web/src/config/deployments.json) (chain `11155111`),
+which is the single source the frontend reads.
 
 ## Contributing
 

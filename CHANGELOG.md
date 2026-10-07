@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.1.0] - 2026-10-07
+## [0.1.0] - 2026-10-08
 
 First release of the Tokenized Vault demo (feature `001-tokenized-vault-dapp`).
 
@@ -31,6 +31,12 @@ First release of the Tokenized Vault demo (feature `001-tokenized-vault-dapp`).
     explorer links only on Sepolia, plain tx hashes on Anvil.
 - **Tooling**: `scripts/` deploy (Anvil, Sepolia) + config/ABI sync, GitHub Actions CI
   (contracts + web gates), Vercel config (`web/vercel.json`, config-only).
+- **Live deployment**: production site at <https://tokenized-vault.vercel.app> (Vercel,
+  Root Directory `web`) plus verified Sepolia contracts —
+  [`FaucetToken` `0x8f6BaF9e021a57dddb2A70E7e186e6Ffb6f000f3`](https://sepolia.etherscan.io/address/0x8f6baf9e021a57dddb2a70e7e186e6ffb6f000f3)
+  and
+  [`Vault` `0xBF27A9d9b4f636783B1b19D94b7D1BE4e51998B0`](https://sepolia.etherscan.io/address/0xbf27a9d9b4f636783b1b19d94b7d1be4e51998b0)
+  at block `11865644`.
 - **Docs & process**: Spec Kit spec/plan/tasks under `specs/001-tokenized-vault-dapp/`,
   README with mermaid architecture, quickstart, security policy, contributing guide,
   code of conduct, issue/PR templates.
