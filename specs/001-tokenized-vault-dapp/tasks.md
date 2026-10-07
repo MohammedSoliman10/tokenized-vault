@@ -62,7 +62,7 @@ validation) → final manual publishing gate.
   `"test": "vitest run"` to `web/package.json` (no test files yet — the boundary suite
   arrives in T017).
   Verify: `cd web && npm run typecheck && npm run lint && npm run build`
-- [ ] T004 [P] Create env contract for the frontend: `web/.env.example` (placeholders only:
+- [X] T004 [P] Create env contract for the frontend: `web/.env.example` (placeholders only:
   `VITE_SEPOLIA_RPC_URL=`, `VITE_REOWN_PROJECT_ID=`) and `web/src/vite-env.d.ts` (typed
   `ImportMetaEnv` for those two optional keys).
   Verify: `cd web && npm run typecheck && npm run lint && npm run build`
