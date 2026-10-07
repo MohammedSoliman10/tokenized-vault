@@ -168,7 +168,7 @@ T007 fixture.)*
   `estimateWithdraw(shares, totalSupply, vaultBalance) = (shares * vaultBalance) / totalSupply`,
   `sharePriceScaled18` (null when `totalSupply == 0`), `userShareBps = shares * 10_000n / totalSupply`.
   Verify: `cd web && npm run typecheck && npm run lint && npm run build`
-- [ ] T017 Create the Vitest boundary suite `web/src/lib/vaultMath.test.ts` (Vitest already
+- [X] T017 Create the Vitest boundary suite `web/src/lib/vaultMath.test.ts` (Vitest already
   configured in T003) covering the FIRST-DEPOSIT BOUNDARY explicitly:
   `estimateShares(1000n, 0n, 0n)` → rejects/returns invalid (contract would revert
   `AmountTooSmall`), `estimateShares(1001n, 0n, 0n)` → `1n` share,
