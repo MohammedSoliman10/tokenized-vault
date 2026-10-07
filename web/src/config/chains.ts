@@ -2,7 +2,17 @@ import { fallback, http } from 'viem'
 import { anvil, sepolia } from 'wagmi/chains'
 
 /** Supported chains only (constitution): Anvil 31337 + Sepolia 11155111. */
-export const chains = [anvil, sepolia] as const
+/**
+ * Array order also sets wagmi's default chain while the wallet is disconnected
+ * (`useActiveChainId` → `useChainId()` → `chains[0]`) and `WrongNetworkBanner`'s
+ * suggested switch target. The production build must lead with the public
+ * Sepolia deployment so walletless visitors read live stats (ui-contracts:
+ * "readable while disconnected"); the dev server keeps Anvil first for the
+ * local workflow.
+ */
+export const chains = import.meta.env.PROD
+  ? ([sepolia, anvil] as const)
+  : ([anvil, sepolia] as const)
 
 /**
  * Transports — addresses/URLs from env/config only, never hardcoded in components.
