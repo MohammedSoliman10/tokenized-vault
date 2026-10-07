@@ -107,7 +107,7 @@ deploy/ABI tooling, then shared frontend foundations.
   `shares == amount * totalSupply / balance` (floor) for fuzzed supplies; larger deposits
   never mint fewer shares (monotonicity); first-deposit boundary fuzz around 1000/1001.
   Verify: `cd contracts && forge test`
-- [ ] T009 [P] Invariant suites: `contracts/test/VaultInvariant.t.sol` +
+- [X] T009 [P] Invariant suites: `contracts/test/VaultInvariant.t.sol` +
   `contracts/test/helpers/VaultHandler.sol` (ghost sums incl. dead address, bounded
   `runs = 256`, `depth = 32`) with invariants, verbatim: (1)
   `token.balanceOf(vault) >= value of all non-dead shares` (constitution-required solvency),
