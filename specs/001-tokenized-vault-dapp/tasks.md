@@ -328,7 +328,7 @@ hashes with NO external link; failed fetch shows inline retry without blanking.
 **Purpose**: Professional repo file set (constitution), CI, Vercel config, full validation.
 Repo gate command used below = `cd web && npm run typecheck && npm run lint && npm run build && cd ../contracts && forge test`
 
-- [ ] T032 [P] Write `README.md` with: project overview, ASCII/mermaid **architecture
+- [X] T032 [P] Write `README.md` with: project overview, ASCII/mermaid **architecture
   diagram** (web ↔ chains ↔ contracts, scripts, generated config), **design notes section
   stating verbatim**: shares are non-transferable, fee-on-transfer tokens are unsupported,
   and 1000 **BASE UNITS** of dead shares protect against first-depositor inflation attacks
