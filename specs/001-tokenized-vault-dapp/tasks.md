@@ -235,7 +235,7 @@ pending/success/error states and all pre-tx guards.
 skipped when allowance suffices; zero/over-balance/first-deposit-≤1000 blocked inline with
 explanations; wallet rejection shows "cancelled" with no stuck spinner.
 
-- [ ] T023 [P] [US2] Create `web/src/hooks/useTokenBalance.ts` as a thin selector over the
+- [X] T023 [P] [US2] Create `web/src/hooks/useTokenBalance.ts` as a thin selector over the
   T021 `useVaultStats` snapshot (token `balanceOf` + `allowance(user, vault)` only) — one
   source and one invalidation path for balance/allowance reads (no duplicate fetch paths;
   invalidation after receipts flows from T021).
