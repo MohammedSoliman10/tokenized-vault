@@ -117,7 +117,7 @@ deploy/ABI tooling, then shared frontend foundations.
   `totalSupply` grows by exactly `1000e18` per successful claim (ghost claim-sum), and
   (4) `nextClaimAt(user)` never decreases across any claim sequence (Constitution II —
   FaucetToken invariant tier). Verify: `cd contracts && forge test`
-- [ ] T010 [P] Reentrancy test: create `contracts/test/mocks/MaliciousToken.sol`
+- [X] T010 [P] Reentrancy test: create `contracts/test/mocks/MaliciousToken.sol`
   (ERC-20 whose `transfer`/`transferFrom` re-enters `deposit`/`withdraw`) and
   `contracts/test/Reentrancy.t.sol` asserting `Reentrancy` error on nested call and state
   consistency after the failed attempt. Verify: `cd contracts && forge test`
