@@ -57,7 +57,7 @@ validation) → final manual publishing gate.
   `@theme` tokens, near-black surfaces, accent color) and import Inter from
   `@fontsource/inter` in `web/src/main.tsx`.
   Verify: `cd web && npm run typecheck && npm run lint && npm run build`
-- [ ] T003 [P] Configure Vitest: create `web/vitest.config.ts` (jsdom environment so React
+- [X] T003 [P] Configure Vitest: create `web/vitest.config.ts` (jsdom environment so React
   Testing Library component tests can run alongside pure-function tests) and add
   `"test": "vitest run"` to `web/package.json` (no test files yet — the boundary suite
   arrives in T017).
