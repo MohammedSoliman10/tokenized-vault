@@ -65,3 +65,16 @@ export function userShareBps(userShares: bigint, totalSupply: bigint): bigint {
   if (totalSupply === 0n) return 0n
   return (userShares * 10_000n) / totalSupply
 }
+
+/**
+ * User's percent of the vault scaled by 10^4 so the dashboard can render four
+ * decimal places: `floor(userShares * 1_000_000 / totalSupply)` — 100% is
+ * 1_000_000, so 1/1001 shares → 999 → "0.0999%". The denominator is
+ * `Vault.totalSupply()`, which INCLUDES the 1000 dead shares (the contract
+ * definition); bps granularity would floor that case to 0.09%.
+ * Returns 0n at bootstrap (no shares exist).
+ */
+export function userSharePct1e4(userShares: bigint, totalSupply: bigint): bigint {
+  if (totalSupply === 0n) return 0n
+  return (userShares * 1_000_000n) / totalSupply
+}

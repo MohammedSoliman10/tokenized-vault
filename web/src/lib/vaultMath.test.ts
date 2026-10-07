@@ -5,6 +5,7 @@ import {
   estimateWithdraw,
   sharePriceScaled18,
   userShareBps,
+  userSharePct1e4,
 } from './vaultMath'
 
 describe('estimateShares — first-deposit boundary (mirrors AmountTooSmall)', () => {
@@ -95,5 +96,30 @@ describe('userShareBps', () => {
   it('is floor(shares * 10_000 / totalSupply)', () => {
     expect(userShareBps(2_500n, 10_000n)).toBe(2_500n) // 25%
     expect(userShareBps(1n, 3n)).toBe(3_333n) // floor(3333.33…)
+  })
+})
+
+describe('first-deposit scenario pin — deposit of 1001 base units (contract definitions)', () => {
+  // Vault.sol bootstrap: _mint(DEAD_ADDRESS, 1000) + _mint(caller, amount - 1000);
+  // totalSupply therefore INCLUDES the dead shares (asserted by Vault.t.sol:
+  // totalSupply == amount, balanceOf[DEAD_ADDRESS] == 1000).
+  const amount = 1001n
+  const totalSupply = amount // 1001 = 1000 dead + 1 caller
+  const vaultBalance = amount // deposit pulls the full amount in
+  const userShares = estimateShares(amount, 0n, 0n) // bootstrap → 1
+
+  it('your shares: exactly 1 base unit (1001 - 1000 dead)', () => {
+    expect(userShares).toBe(1n)
+  })
+
+  it('share price: exactly 1 (vaultBalance / totalSupply = 1001 / 1001)', () => {
+    expect(sharePriceScaled18(totalSupply, vaultBalance)).toBe(10n ** 18n)
+  })
+
+  it('your % of vault: 0.0999% (1 / 1001 with dead shares in the denominator)', () => {
+    expect(userSharePct1e4(userShares, totalSupply)).toBe(999n) // 0.0999%
+    // excluding dead shares would give 100% — pinned so that regression cannot return
+    expect(userShareBps(userShares, totalSupply)).toBe(9n)
+    expect(userSharePct1e4(userShares, totalSupply - DEAD_SHARES)).toBe(1_000_000n)
   })
 })

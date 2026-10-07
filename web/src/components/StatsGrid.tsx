@@ -25,11 +25,11 @@ function StatCard({ label, value, placeholder, hint }: StatCardProps) {
   )
 }
 
-/** Basis points → "12.34%" with pure bigint math (no float). */
-function pctText(bps: bigint): string {
-  const whole = bps / 100n
-  const frac = bps % 100n
-  return `${whole}.${frac.toString().padStart(2, '0')}%`
+/** percent × 10⁴ → "12.3456%" with pure bigint math (no float). */
+function pctText(pct1e4: bigint): string {
+  const whole = pct1e4 / 10_000n
+  const frac = pct1e4 % 10_000n
+  return `${whole}.${frac.toString().padStart(4, '0')}%`
 }
 
 /**
@@ -110,8 +110,8 @@ export function StatsGrid() {
           <StatCard
             label="Your % of vault"
             value={
-              connected && !stats.atBootstrap && stats.userPctBps !== null
-                ? pctText(stats.userPctBps)
+              connected && !stats.atBootstrap && stats.userPct1e4 !== null
+                ? pctText(stats.userPct1e4)
                 : undefined
             }
             placeholder={

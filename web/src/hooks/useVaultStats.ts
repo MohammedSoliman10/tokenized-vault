@@ -5,7 +5,7 @@ import { erc20Abi } from '../abi/ERC20'
 import { faucetTokenAbi } from '../abi/FaucetToken'
 import { vaultAbi } from '../abi/Vault'
 import deploymentsJson from '../config/deployments.json'
-import { sharePriceScaled18, userShareBps } from '../lib/vaultMath'
+import { sharePriceScaled18, userSharePct1e4 } from '../lib/vaultMath'
 
 /** Address/URLs come from config only (constitution V / FR-028). */
 export interface DeploymentEntry {
@@ -51,8 +51,8 @@ export interface VaultStatsSnapshot {
   sharePriceScaled18: bigint | null
   userShares: bigint | null
   userTokenBalance: bigint | null
-  /** user share of the vault in basis points; null at bootstrap or before first read. */
-  userPctBps: bigint | null
+  /** user's percent of the vault scaled 1e4 (0.0999% → 999); denominator includes dead shares; null at bootstrap or before first read. */
+  userPct1e4: bigint | null
   /** Supporting reads consumed by later flows: allowance (T023), faucet cooldown (T028). */
   allowance: bigint | null
   nextClaimAt: bigint | null
@@ -114,9 +114,9 @@ export function useVaultStats(): VaultStatsSnapshot {
 
   const sharePrice =
     totalShares !== null && tvl !== null ? sharePriceScaled18(totalShares, tvl) : null
-  const userPctBps =
+  const userPct1e4 =
     totalShares !== null && totalShares > 0n && userShares !== null
-      ? userShareBps(userShares, totalShares)
+      ? userSharePct1e4(userShares, totalShares)
       : null
 
   return {
@@ -126,7 +126,7 @@ export function useVaultStats(): VaultStatsSnapshot {
     sharePriceScaled18: sharePrice,
     userShares,
     userTokenBalance,
-    userPctBps,
+    userPct1e4,
     allowance,
     nextClaimAt,
     atBootstrap: totalShares === 0n,

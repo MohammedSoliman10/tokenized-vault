@@ -178,7 +178,8 @@ Cooldown derived from a single `nextClaimAt(account)` read; `0` ⇒ claimable (D
 ### 2.5 VaultStats (FR-008, FR-009)
 
 One multicall snapshot (D9) producing: `tvl` (= `token.balanceOf(vault)`), `totalShares`,
-`sharePrice` (nullable), `userShares`, `userTokenBalance`, `userPct` (bps). Refresh triggers:
+`sharePrice` (nullable), `userShares`, `userTokenBalance`, `userPct` (percent × 10⁴ for
+four-decimal display — denominator `totalSupply` includes the dead shares). Refresh triggers:
 tx receipt confirmation, account change, network change (FR-009); stale data shows a subtle
 "updating…" indicator rather than blanking (SC-002: never an indefinite spinner).
 
