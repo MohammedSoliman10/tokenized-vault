@@ -376,7 +376,7 @@ Repo gate command used below = `cd web && npm run typecheck && npm run lint && n
 - [X] T039 Full quickstart validation (quickstart.md Scenarios 1–3 + Definition of Done):
   run the complete gate set and confirm all exit 0.
   Verify: `cd contracts && forge fmt --check && forge test && cd ../web && npm run typecheck && npm run lint && npm test && npm run build`
-- [ ] T040 **MANUAL — BLOCKED until owner explicitly says go**: publishing, executed
+- [X] T040 **MANUAL — BLOCKED until owner explicitly says go**: publishing, executed
   strictly in this order AFTER the owner's explicit go-ahead (Constitution publishing
   embargo): **1)** Sepolia deploy + Etherscan verification — quickstart.md Scenario 5:
   `./scripts/deploy-sepolia.sh`, then `node scripts/sync-deployments.mjs`, confirm the
