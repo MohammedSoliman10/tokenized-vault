@@ -102,7 +102,7 @@ export function WithdrawForm() {
         <button
           type="button"
           onClick={fillMax}
-          disabled={disabled || pending || stats.userShares === null}
+          disabled={disabled || pending || !connected || stats.userShares === null}
           className="shrink-0 rounded-lg border border-edge bg-surface-overlay px-3 py-2 text-xs font-medium text-gray-300 transition-colors hover:border-accent hover:text-white disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
         >
           Max
