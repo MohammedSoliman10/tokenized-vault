@@ -204,7 +204,7 @@ disabled actions (FR-003); connected → all six stats visible and chain-consist
   walletConnect only when registered; `connecting` spinner + `error` states; accessible focus
   trap/Esc/ARIA) and `web/src/components/Header.tsx` (Connect button, truncated address,
   network indicator, Disconnect). Verify: `cd web && npm run typecheck && npm run lint && npm run build`
-- [ ] T020 [P] [US1] Create `web/src/components/NetworkSwitcher.tsx` (two-chain switcher via
+- [X] T020 [P] [US1] Create `web/src/components/NetworkSwitcher.tsx` (two-chain switcher via
   `useSwitchChain`, adds Anvil chain if wallet doesn't know it) and
   `web/src/components/WrongNetworkBanner.tsx` (persistent banner + "Switch network" CTA when
   `chainId ∉ {31337, 11155111}`; deposit/withdraw/faucet controls disabled — FR-003).
