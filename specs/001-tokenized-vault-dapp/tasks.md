@@ -153,7 +153,7 @@ T007 fixture.)*
 
 ### 2c. Shared frontend foundations
 
-- [ ] T015 Create wagmi config and providers: `web/src/config/chains.ts` (anvil 31337 +
+- [X] T015 Create wagmi config and providers: `web/src/config/chains.ts` (anvil 31337 +
   sepolia 11155111; transports: `http('http://127.0.0.1:8545')` and
   `fallback([http(VITE_SEPOLIA_RPC_URL), http('https://ethereum-sepolia-rpc.publicnode.com')])`
   when unset), `web/src/config/wagmi.ts` (`createConfig` with
