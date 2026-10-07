@@ -140,7 +140,7 @@ T007 fixture.)*
   of values; runs with `--rpc-url $SEPOLIA_RPC_URL --broadcast --verify
   --etherscan-api-key $ETHERSCAN_API_KEY`); `chmod +x` both.
   Verify: `bash -n scripts/deploy-anvil.sh && bash -n scripts/deploy-sepolia.sh`
-- [ ] T013 [P] Create `scripts/sync-deployments.mjs`: reads
+- [X] T013 [P] Create `scripts/sync-deployments.mjs`: reads
   `contracts/broadcast/Deploy.s.sol/<chainId>/run-latest.json` for chains 31337/11155111,
   extracts FaucetToken + Vault `contractAddress`, computes `deployBlock` = min receipt
   `blockNumber`, merges per-chain into `web/src/config/deployments.json`
