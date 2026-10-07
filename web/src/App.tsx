@@ -2,6 +2,7 @@ import { DepositForm } from './components/DepositForm'
 import { Header } from './components/Header'
 import { NetworkSwitcher } from './components/NetworkSwitcher'
 import { StatsGrid } from './components/StatsGrid'
+import { WithdrawForm } from './components/WithdrawForm'
 import { WrongNetworkBanner } from './components/WrongNetworkBanner'
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <StatsGrid />
         <div className="mt-6 grid gap-4 md:grid-cols-3">
           <DepositForm />
+          <WithdrawForm />
         </div>
       </main>
     </div>

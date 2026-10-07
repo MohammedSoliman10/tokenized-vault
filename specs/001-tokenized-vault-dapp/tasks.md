@@ -269,7 +269,7 @@ stats update; Max fills full balance; zero/over-balance blocked; rejection cance
 - [X] T026 [P] [US3] Create `web/src/hooks/useWithdraw.ts`: `idle → withdrawing → success |
   error` (data-model §2.3), error decoding via `errors.ts`, rejection → cancelled → idle.
   Verify: `cd web && npm run typecheck && npm run lint && npm run build`
-- [ ] T027 [US3] Create `web/src/components/WithdrawForm.tsx` and wire into `web/src/App.tsx`:
+- [X] T027 [US3] Create `web/src/components/WithdrawForm.tsx` and wire into `web/src/App.tsx`:
   shares input, **Max** = full `Vault.balanceOf(account)` (US3.1), live estimate
   (`vaultMath.estimateWithdraw`, floor), inline guards for zero/over-balance shares
   (FR-017), pending/success/error states showing receipt-confirmed amounts.
