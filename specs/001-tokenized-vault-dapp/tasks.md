@@ -42,7 +42,7 @@ validation) → final manual publishing gate.
 
 **Purpose**: Initialize the `web/` package so all later tasks have a green baseline.
 
-- [ ] T001 Scaffold the web package with strict TS and lint from day one: create
+- [X] T001 Scaffold the web package with strict TS and lint from day one: create
   `web/package.json` (scripts: `dev`, `build`, `preview`, `typecheck`, `lint`; deps pinned
   per plan.md: vite, react 18, react-dom, typescript, wagmi v2, viem,
   @tanstack/react-query, @radix-ui/react-dialog, tailwindcss, @tailwindcss/vite,
@@ -52,17 +52,17 @@ validation) → final manual publishing gate.
   typescript-eslint recommended, react-hooks rules, ignore `web/src/abi/` generated files),
   `web/vite.config.ts` (react plugin), `web/index.html`, `web/src/main.tsx`, `web/src/App.tsx`.
   Verify: `cd web && npm install && npm run typecheck && npm run lint && npm run build`
-- [ ] T002 [P] Configure Tailwind v4 + dark theme + Inter: edit `web/vite.config.ts`
+- [X] T002 [P] Configure Tailwind v4 + dark theme + Inter: edit `web/vite.config.ts`
   (`@tailwindcss/vite` plugin), create `web/src/index.css` (`@import "tailwindcss";` CSS-first
   `@theme` tokens, near-black surfaces, accent color) and import Inter from
   `@fontsource/inter` in `web/src/main.tsx`.
   Verify: `cd web && npm run typecheck && npm run lint && npm run build`
-- [ ] T003 [P] Configure Vitest: create `web/vitest.config.ts` (jsdom environment so React
+- [X] T003 [P] Configure Vitest: create `web/vitest.config.ts` (jsdom environment so React
   Testing Library component tests can run alongside pure-function tests) and add
   `"test": "vitest run"` to `web/package.json` (no test files yet — the boundary suite
   arrives in T017).
   Verify: `cd web && npm run typecheck && npm run lint && npm run build`
-- [ ] T004 [P] Create env contract for the frontend: `web/.env.example` (placeholders only:
+- [X] T004 [P] Create env contract for the frontend: `web/.env.example` (placeholders only:
   `VITE_SEPOLIA_RPC_URL=`, `VITE_REOWN_PROJECT_ID=`) and `web/src/vite-env.d.ts` (typed
   `ImportMetaEnv` for those two optional keys).
   Verify: `cd web && npm run typecheck && npm run lint && npm run build`
@@ -80,14 +80,14 @@ deploy/ABI tooling, then shared frontend foundations.
 
 ### 2a. Contracts & Foundry tests (before any dependent frontend task)
 
-- [ ] T005 Implement `contracts/src/FaucetToken.sol` per data-model §1.2 / research D3:
+- [X] T005 Implement `contracts/src/FaucetToken.sol` per data-model §1.2 / research D3:
   OZ v5.7.0 ERC20 ("Vault Test Token", "VTT", 18 decimals), `FAUCET_AMOUNT = 1000e18`,
   `COOLDOWN = 24 hours`, `faucet()` minting to `msg.sender` with per-address
   `lastClaimAt` check reverting `error CooldownActive(uint256 availableAt)`
   (`availableAt = lastClaim + 24h`), `event Claimed(address indexed caller, uint256 amount)`,
   `function nextClaimAt(address) view returns (uint256)` (0 when never claimed).
   Verify: `cd contracts && forge build && forge test`
-- [ ] T006 [P] FaucetToken unit + fuzz tests in `contracts/test/FaucetToken.t.sol`: claim mints
+- [X] T006 [P] FaucetToken unit + fuzz tests in `contracts/test/FaucetToken.t.sol`: claim mints
   exactly 1000e18 + emits `Claimed`; second claim within 24h reverts `CooldownActive(last+86400)`
   (use `vm.warp` at boundary: `+86399` fails, `+86400` succeeds); `nextClaimAt` returns 0
   before first claim, `last+86400` after; ERC-20 transfer/approve/allowance basics; **FUZZ
@@ -95,19 +95,19 @@ deploy/ABI tooling, then shared frontend foundations.
   second claim reverts `CooldownActive(availableAt)` for every timestamp strictly before
   `lastClaim + 24h` and succeeds at/after it (Constitution II — FaucetToken fuzz tier).
   Verify: `cd contracts && forge test`
-- [ ] T007 Vault unit tests + shared fixture: create `contracts/test/VaultTestBase.sol`
+- [X] T007 Vault unit tests + shared fixture: create `contracts/test/VaultTestBase.sol`
   (deploys FaucetToken + Vault fixture, helper actors) and `contracts/test/Vault.t.sol`:
   deposit/withdraw happy paths and events; bootstrap branch — first deposit `<= 1000` base
   units reverts `AmountTooSmall`, `1001` succeeds (1000 shares to `0xdead`, caller gets 1);
   `ZeroAmount` (deposit 0), `ZeroShares` (withdraw 0), `AmountTooSmall`, `TransferFailed`
   (mock returning false); shares non-transferable by construction (no transfer fn — assert
   ABI surface has none). Verify: `cd contracts && forge test`
-- [ ] T008 [P] Fuzz tests in `contracts/test/VaultFuzz.t.sol` (extends `VaultTestBase`):
+- [X] T008 [P] Fuzz tests in `contracts/test/VaultFuzz.t.sol` (extends `VaultTestBase`):
   deposit→withdraw round trip returns within floor-rounding tolerance for fuzzed amounts;
   `shares == amount * totalSupply / balance` (floor) for fuzzed supplies; larger deposits
   never mint fewer shares (monotonicity); first-deposit boundary fuzz around 1000/1001.
   Verify: `cd contracts && forge test`
-- [ ] T009 [P] Invariant suites: `contracts/test/VaultInvariant.t.sol` +
+- [X] T009 [P] Invariant suites: `contracts/test/VaultInvariant.t.sol` +
   `contracts/test/helpers/VaultHandler.sol` (ghost sums incl. dead address, bounded
   `runs = 256`, `depth = 32`) with invariants, verbatim: (1)
   `token.balanceOf(vault) >= value of all non-dead shares` (constitution-required solvency),
@@ -117,7 +117,7 @@ deploy/ABI tooling, then shared frontend foundations.
   `totalSupply` grows by exactly `1000e18` per successful claim (ghost claim-sum), and
   (4) `nextClaimAt(user)` never decreases across any claim sequence (Constitution II —
   FaucetToken invariant tier). Verify: `cd contracts && forge test`
-- [ ] T010 [P] Reentrancy test: create `contracts/test/mocks/MaliciousToken.sol`
+- [X] T010 [P] Reentrancy test: create `contracts/test/mocks/MaliciousToken.sol`
   (ERC-20 whose `transfer`/`transferFrom` re-enters `deposit`/`withdraw`) and
   `contracts/test/Reentrancy.t.sol` asserting `Reentrancy` error on nested call and state
   consistency after the failed attempt. Verify: `cd contracts && forge test`
@@ -127,33 +127,33 @@ T007 fixture.)*
 
 ### 2b. Deploy & codegen tooling
 
-- [ ] T011 Create `contracts/script/Deploy.s.sol`: reads key via `vm.envUint("PRIVATE_KEY")`
+- [X] T011 Create `contracts/script/Deploy.s.sol`: reads key via `vm.envUint("PRIVATE_KEY")`
   (NEVER logs it — logs only deployed addresses), deploys `FaucetToken` then
   `Vault(faucetToken)` per research D6, writes nothing else.
-  Verify: `cd contracts && forge build && PRIVATE_KEY=0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 forge script script/Deploy.s.sol && forge test`
+  Verify: `cd contracts && forge build && forge script script/Deploy.s.sol --rpc-url http://127.0.0.1:8545 --unlocked --sender 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266 --broadcast && forge test`
   (public Anvil/Hardhat key #0 — local simulation only; the real Sepolia key stays in
   gitignored `contracts/.env`)
-- [ ] T012 [P] Create shell wrappers `scripts/deploy-anvil.sh` (`set -euo pipefail`,
+- [X] T012 [P] Create shell wrappers `scripts/deploy-anvil.sh` (`set -euo pipefail`,
   exports the public Anvil account #0 key, runs forge script with
   `--rpc-url http://127.0.0.1:8545 --broadcast`) and `scripts/deploy-sepolia.sh`
   (loads `contracts/.env` via `set -a; source contracts/.env; set +a`; NO `set -x`, NO echo
   of values; runs with `--rpc-url $SEPOLIA_RPC_URL --broadcast --verify
   --etherscan-api-key $ETHERSCAN_API_KEY`); `chmod +x` both.
   Verify: `bash -n scripts/deploy-anvil.sh && bash -n scripts/deploy-sepolia.sh`
-- [ ] T013 [P] Create `scripts/sync-deployments.mjs`: reads
+- [X] T013 [P] Create `scripts/sync-deployments.mjs`: reads
   `contracts/broadcast/Deploy.s.sol/<chainId>/run-latest.json` for chains 31337/11155111,
   extracts FaucetToken + Vault `contractAddress`, computes `deployBlock` = min receipt
   `blockNumber`, merges per-chain into `web/src/config/deployments.json`
   (`{chainId: {faucetToken, vault, deployBlock}}`); MUST exit 0 writing `{}` when no
   broadcast exists (fresh clone). Verify: `node scripts/sync-deployments.mjs && cat web/src/config/deployments.json`
-- [ ] T014 [P] Create `scripts/sync-abis.mjs`: reads forge artifacts under `contracts/out/`
+- [X] T014 [P] Create `scripts/sync-abis.mjs`: reads forge artifacts under `contracts/out/`
   and writes `web/src/abi/Vault.ts`, `web/src/abi/FaucetToken.ts`, `web/src/abi/ERC20.ts`
   as exported `... as const` arrays (ERC20 = standard subset of the FaucetToken artifact).
   Verify: `cd contracts && forge build && cd .. && node scripts/sync-abis.mjs && cd web && npm run typecheck`
 
 ### 2c. Shared frontend foundations
 
-- [ ] T015 Create wagmi config and providers: `web/src/config/chains.ts` (anvil 31337 +
+- [X] T015 Create wagmi config and providers: `web/src/config/chains.ts` (anvil 31337 +
   sepolia 11155111; transports: `http('http://127.0.0.1:8545')` and
   `fallback([http(VITE_SEPOLIA_RPC_URL), http('https://ethereum-sepolia-rpc.publicnode.com')])`
   when unset), `web/src/config/wagmi.ts` (`createConfig` with
@@ -161,21 +161,21 @@ T007 fixture.)*
   wagmi connectors ONLY, no RainbowKit/ConnectKit), `web/src/main.tsx`
   (WagmiProvider + QueryClientProvider), ensure `web/src/config/deployments.json` exists
   (from T013). Verify: `cd web && npm run typecheck && npm run lint && npm run build`
-- [ ] T016 Create `web/src/lib/vaultMath.ts` per research D8: pure bigint,
+- [X] T016 Create `web/src/lib/vaultMath.ts` per research D8: pure bigint,
   floor division mirroring `Vault.sol`: `estimateShares(amount, totalSupply, vaultBalance)`
   (bootstrap `totalSupply == 0`: returns invalid/throws for `amount <= 1000n`, else
   `amount - 1000n`; else `(amount * totalSupply) / vaultBalance`),
   `estimateWithdraw(shares, totalSupply, vaultBalance) = (shares * vaultBalance) / totalSupply`,
   `sharePriceScaled18` (null when `totalSupply == 0`), `userShareBps = shares * 10_000n / totalSupply`.
   Verify: `cd web && npm run typecheck && npm run lint && npm run build`
-- [ ] T017 Create the Vitest boundary suite `web/src/lib/vaultMath.test.ts` (Vitest already
+- [X] T017 Create the Vitest boundary suite `web/src/lib/vaultMath.test.ts` (Vitest already
   configured in T003) covering the FIRST-DEPOSIT BOUNDARY explicitly:
   `estimateShares(1000n, 0n, 0n)` → rejects/returns invalid (contract would revert
   `AmountTooSmall`), `estimateShares(1001n, 0n, 0n)` → `1n` share,
   `estimateShares(1002n, 0n, 0n)` → `2n`; plus floor-rounding round-trips
   (`estimateWithdraw(estimateShares(x,...),...) <= x`) and `sharePriceScaled18` null at
   bootstrap. Verify: `cd web && npm test && npm run typecheck && npm run lint && npm run build`
-- [ ] T018 [P] Create `web/src/lib/errors.ts` (decode `ZeroAmount`, `ZeroShares`,
+- [X] T018 [P] Create `web/src/lib/errors.ts` (decode `ZeroAmount`, `ZeroShares`,
   `AmountTooSmall`, `TransferFailed`, `Reentrancy`, `CooldownActive(availableAt)`,
   OpenZeppelin `ERC20InsufficientAllowance` (allowance race) and `ERC20InsufficientBalance`
   with actionable messages, user rejection (4001/`UserRejectedRequestError`), insufficient
@@ -199,24 +199,24 @@ stats (read-only while disconnected).
 connect (FR-004); connect injected wallet → address + network shown; wrong chain → banner +
 disabled actions (FR-003); connected → all six stats visible and chain-consistent (FR-008).
 
-- [ ] T019 [US1] Create `web/src/components/WalletModal.tsx` (headless dialog via
+- [X] T019 [US1] Create `web/src/components/WalletModal.tsx` (headless dialog via
   `@radix-ui/react-dialog`: lists connectors from `useConnectors()` — injected always,
   walletConnect only when registered; `connecting` spinner + `error` states; accessible focus
   trap/Esc/ARIA) and `web/src/components/Header.tsx` (Connect button, truncated address,
   network indicator, Disconnect). Verify: `cd web && npm run typecheck && npm run lint && npm run build`
-- [ ] T020 [P] [US1] Create `web/src/components/NetworkSwitcher.tsx` (two-chain switcher via
+- [X] T020 [P] [US1] Create `web/src/components/NetworkSwitcher.tsx` (two-chain switcher via
   `useSwitchChain`, adds Anvil chain if wallet doesn't know it) and
   `web/src/components/WrongNetworkBanner.tsx` (persistent banner + "Switch network" CTA when
   `chainId ∉ {31337, 11155111}`; deposit/withdraw/faucet controls disabled — FR-003).
   Verify: `cd web && npm run typecheck && npm run lint && npm run build`
-- [ ] T021 [P] [US1] Create `web/src/hooks/useVaultStats.ts`: one `useReadContracts`
+- [X] T021 [P] [US1] Create `web/src/hooks/useVaultStats.ts`: one `useReadContracts`
   multicall (`Vault.totalSupply`, `Vault.balanceOf(user)`, `ERC20.balanceOf(vault)`,
   `ERC20.balanceOf(user)`, `ERC20.allowance(user, vault)`, `FaucetToken.nextClaimAt(user)`)
   producing the six stats (tvl, totalShares, sharePrice via `vaultMath` with null→placeholder
   at bootstrap, userShares, userTokenBalance, userPct from `userShareBps`); refresh on tx
   receipt/account/network change (FR-009); previous values stay visible while updating
   (SC-002, no blanking). Verify: `cd web && npm run typecheck && npm run lint && npm run build`
-- [ ] T022 [US1] Create `web/src/components/StatsGrid.tsx` (six labeled stats, responsive
+- [X] T022 [US1] Create `web/src/components/StatsGrid.tsx` (six labeled stats, responsive
   360px→desktop, connect-prompt placeholders for user rows when disconnected, bootstrap
   explanatory placeholder for share price — never NaN/0 pretending) and wire US1 into
   `web/src/App.tsx` (header + grid layout, dark theme). Verify:
@@ -235,12 +235,12 @@ pending/success/error states and all pre-tx guards.
 skipped when allowance suffices; zero/over-balance/first-deposit-≤1000 blocked inline with
 explanations; wallet rejection shows "cancelled" with no stuck spinner.
 
-- [ ] T023 [P] [US2] Create `web/src/hooks/useTokenBalance.ts` as a thin selector over the
+- [X] T023 [P] [US2] Create `web/src/hooks/useTokenBalance.ts` as a thin selector over the
   T021 `useVaultStats` snapshot (token `balanceOf` + `allowance(user, vault)` only) — one
   source and one invalidation path for balance/allowance reads (no duplicate fetch paths;
   invalidation after receipts flows from T021).
   Verify: `cd web && npm run typecheck && npm run lint && npm run build`
-- [ ] T024 [US2] Create `web/src/hooks/useDeposit.ts`: state machine
+- [X] T024 [US2] Create `web/src/hooks/useDeposit.ts`: state machine
   `idle → approving → depositing → success | error` per data-model §2.2 — exact-amount
   `approve(vault, amount)` (NEVER unlimited), wait for approval receipt before `deposit`,
   skip `approving` when `allowance >= amount` (FR-011), **re-validate the allowance
@@ -248,7 +248,7 @@ explanations; wallet rejection shows "cancelled" with no stuck spinner.
   mid-flow** (edge case: allowance revoked between open and confirm), decode all failures
   via `errors.ts`, user rejection → cancelled state returning to idle (FR-019).
   Verify: `cd web && npm run typecheck && npm run lint && npm run build`
-- [ ] T025 [US2] Create `web/src/components/DepositForm.tsx` and wire into `web/src/App.tsx`:
+- [X] T025 [US2] Create `web/src/components/DepositForm.tsx` and wire into `web/src/App.tsx`:
   live share estimate (`vaultMath.estimateShares`), inline guards for empty/zero/over-balance
   amounts (FR-013) and first deposit ≤ 1000 base units with the dead-share explanation
   (FR-014 — wording says "1000 base units", NOT tokens), step indicators for Approve→Deposit,
@@ -266,10 +266,10 @@ explanations; wallet rejection shows "cancelled" with no stuck spinner.
 **Independent Test**: Share holder withdraws → tokens returned, share balance decreases,
 stats update; Max fills full balance; zero/over-balance blocked; rejection cancels cleanly.
 
-- [ ] T026 [P] [US3] Create `web/src/hooks/useWithdraw.ts`: `idle → withdrawing → success |
+- [X] T026 [P] [US3] Create `web/src/hooks/useWithdraw.ts`: `idle → withdrawing → success |
   error` (data-model §2.3), error decoding via `errors.ts`, rejection → cancelled → idle.
   Verify: `cd web && npm run typecheck && npm run lint && npm run build`
-- [ ] T027 [US3] Create `web/src/components/WithdrawForm.tsx` and wire into `web/src/App.tsx`:
+- [X] T027 [US3] Create `web/src/components/WithdrawForm.tsx` and wire into `web/src/App.tsx`:
   shares input, **Max** = full `Vault.balanceOf(account)` (US3.1), live estimate
   (`vaultMath.estimateWithdraw`, floor), inline guards for zero/over-balance shares
   (FR-017), pending/success/error states showing receipt-confirmed amounts.
@@ -286,11 +286,11 @@ stats update; Max fills full balance; zero/over-balance blocked; rejection cance
 **Independent Test**: Eligible address claims → +1000 VTT balance; immediate second claim
 blocked with remaining-time countdown; rejection cancels without changing cooldown.
 
-- [ ] T028 [P] [US4] Create `web/src/hooks/useFaucetClaim.ts`: `idle → claiming → success |
+- [X] T028 [P] [US4] Create `web/src/hooks/useFaucetClaim.ts`: `idle → claiming → success |
   error`, cooldown derived from `nextClaimAt(account)` (0 ⇒ claimable), re-read after
   receipt; `CooldownActive` decode → countdown message (FR-006/FR-018).
   Verify: `cd web && npm run typecheck && npm run lint && npm run build`
-- [ ] T029 [US4] Create `web/src/components/FaucetPanel.tsx` and wire into `web/src/App.tsx`:
+- [X] T029 [US4] Create `web/src/components/FaucetPanel.tsx` and wire into `web/src/App.tsx`:
   claim button with available/claiming/success/cooldown states, live countdown that re-enables
   the button on expiry without reload, disabled+explained on wrong network/disconnected.
   Verify: `cd web && npm run typecheck && npm run lint && npm run build`
@@ -308,13 +308,13 @@ Sepolia explorer links only.
 highlighted); Sepolia entries link to `sepolia.etherscan.io/tx/…`; Anvil entries show plain
 hashes with NO external link; failed fetch shows inline retry without blanking.
 
-- [ ] T030 [P] [US5] Create `web/src/hooks/useActivity.ts`: viem `getLogs` on Vault
+- [X] T030 [P] [US5] Create `web/src/hooks/useActivity.ts`: viem `getLogs` on Vault
   `Deposit`/`Withdraw` from `deployments.json` `deployBlock`, chunks ≤ 10,000 blocks with
   auto-halving on RPC range errors (min 1,000), dedupe by `(transactionHash, logIndex)`,
   sort block desc, keep newest 20 (FR-021/FR-023, research D11), plus
   `useWatchContractEvent` live appends; fetch failure → retryable error state (never blanks
   existing entries). Verify: `cd web && npm run typecheck && npm run lint && npm run build`
-- [ ] T031 [US5] Create `web/src/components/ActivityFeed.tsx` and wire into `web/src/App.tsx`:
+- [X] T031 [US5] Create `web/src/components/ActivityFeed.tsx` and wire into `web/src/App.tsx`:
   columns type/account(truncated, self highlighted)/amount/shares/relative time; explorer link
   ONLY for chainId 11155111, plain-hash rendering on 31337 (FR-022 — never a broken link).
   Verify: `cd web && npm run typecheck && npm run lint && npm run build`
@@ -328,7 +328,7 @@ hashes with NO external link; failed fetch shows inline retry without blanking.
 **Purpose**: Professional repo file set (constitution), CI, Vercel config, full validation.
 Repo gate command used below = `cd web && npm run typecheck && npm run lint && npm run build && cd ../contracts && forge test`
 
-- [ ] T032 [P] Write `README.md` with: project overview, ASCII/mermaid **architecture
+- [X] T032 [P] Write `README.md` with: project overview, ASCII/mermaid **architecture
   diagram** (web ↔ chains ↔ contracts, scripts, generated config), **design notes section
   stating verbatim**: shares are non-transferable, fee-on-transfer tokens are unsupported,
   and 1000 **BASE UNITS** of dead shares protect against first-depositor inflation attacks
@@ -336,28 +336,32 @@ Repo gate command used below = `cd web && npm run typecheck && npm run lint && n
   `specs/001-tokenized-vault-dapp/quickstart.md` and contains only the 5-line happy path
   (clone → `npm install` → `forge test` → Anvil deploy → `npm run dev`).
   Verify: (repo gate command)
-- [ ] T033 [P] Create `LICENSE` (MIT, copyright holder placeholder), `SECURITY.md`
+- [X] T033 [P] Create `LICENSE` (MIT, copyright holder placeholder), `SECURITY.md`
   (vulnerability reporting, demo-scope disclaimer), `CONTRIBUTING.md` (Conventional Commits,
   Definition of Done gates), `CODE_OF_CONDUCT.md` (Contributor Covenant), `CHANGELOG.md`
   (Keep a Changelog, 0.1.0 entry). Verify: (repo gate command)
-- [ ] T034 [P] Create GitHub templates: `.github/ISSUE_TEMPLATE/bug_report.md`,
+- [X] T034 [P] Create GitHub templates: `.github/ISSUE_TEMPLATE/bug_report.md`,
   `.github/ISSUE_TEMPLATE/feature_request.md`, `.github/PULL_REQUEST_TEMPLATE.md` (includes
   "verification commands run" checklist). Verify: (repo gate command)
-- [ ] T035 Create `.github/workflows/ci.yml`: job `contracts` —
+- [X] T035 Create `.github/workflows/ci.yml`: job `contracts` —
   `actions/checkout` with `submodules: recursive`, foundry-toolchain, `forge fmt --check`,
   `forge test`; job `web` — setup-node 20 with npm cache, `npm ci` in `web/`,
-  `npm run typecheck`, `npm run lint`, `npm run build`. (No deploy jobs, no secrets used.)
-  Verify: local equivalent of CI (must pass before committing): `cd contracts && forge fmt --check && forge test && cd ../web && npm run typecheck && npm run lint && npm run build`
-- [ ] T036 [P] Vercel CONFIG ONLY (no deploy — T040 gates it): create `web/vercel.json`
+  `npm run typecheck`, `npm run lint`, `npm test`, `npm run build`. (No deploy jobs, no
+  secrets used.) Verify: local equivalent of CI (must pass before committing):
+  `cd contracts && forge fmt --check && forge test && cd ../web && npm run typecheck && npm run lint && npm test && npm run build`
+- [X] T036 [P] Vercel CONFIG ONLY (no deploy — T040 gates it): create `web/vercel.json`
   (framework vite, install/build/output settings for `web/` root) and document required
   `VITE_*` env vars in `README.md` deployment section. Verify:
   `node -e "JSON.parse(require('fs').readFileSync('web/vercel.json','utf8'))" && cd web && npm run typecheck && npm run lint && npm test && npm run build`
-- [ ] T037 Secret-hygiene check (quickstart.md Scenario 3): run exactly
+- [X] T037 Secret-hygiene check (quickstart.md Scenario 3): run exactly
   `git check-ignore -q contracts/.env && echo "OK"` and
-  `grep -rE "0x[a-fA-F0-9]{64}" --exclude-dir=.git --exclude-dir=lib --exclude-dir=out --exclude-dir=broadcast --exclude=".env*" . && echo "FAIL" || echo "OK"`
-  — both MUST print `OK` (no key-like literals in tracked files). If `FAIL`, find and remove
-  the leak, then re-run. Verify: re-run both commands → `OK` twice.
-- [ ] T038 Anvil end-to-end demo run (quickstart.md Scenario 4, manual): start `anvil`, run
+  `git grep -E "0x[a-fA-F0-9]{64}" -- ':(exclude,glob)**/.env*' ':(exclude,glob).env*' && echo "FAIL" || echo "OK"`
+  — both MUST print `OK` (no key-like literals in tracked files; `git grep`
+  scans tracked files only, which is exactly the stated intent — a plain
+  `grep -r` also matches gitignored vendor/build trees and can never pass).
+  If `FAIL`, find and remove the leak, then re-run. Verify: re-run both
+  commands → `OK` twice.
+- [X] T038 Anvil end-to-end demo run (quickstart.md Scenario 4, manual): start `anvil`, run
   `./scripts/deploy-anvil.sh`, `node scripts/sync-deployments.mjs`,
   `cd contracts && forge build && cd .. && node scripts/sync-abis.mjs`,
   `cd web && npm run dev`; walk US1–US5: connect modal, network switch + wrong-network
@@ -369,7 +373,7 @@ Repo gate command used below = `cd web && npm run typecheck && npm run lint && n
   numbers observed.
   Verify: `./scripts/deploy-anvil.sh && node scripts/sync-deployments.mjs` exits 0 AND every
   walkthrough item above passes manually (record results in the PR description).
-- [ ] T039 Full quickstart validation (quickstart.md Scenarios 1–3 + Definition of Done):
+- [X] T039 Full quickstart validation (quickstart.md Scenarios 1–3 + Definition of Done):
   run the complete gate set and confirm all exit 0.
   Verify: `cd contracts && forge fmt --check && forge test && cd ../web && npm run typecheck && npm run lint && npm test && npm run build`
 - [ ] T040 **MANUAL — BLOCKED until owner explicitly says go**: publishing, executed

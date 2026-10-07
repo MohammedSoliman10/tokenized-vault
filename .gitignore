@@ -7,3 +7,4 @@ contracts/cache
 contracts/broadcast
 web/dist
 .DS_Store
+*.tsbuildinfo

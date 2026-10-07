@@ -4,4 +4,13 @@ out = "out"
 libs = ["lib"]
 solc_version = "0.8.31"
 
+[invariant]
+runs = 256
+depth = 32
+
+[fmt]
+# Frozen by constitution (byte-for-byte identical to main) — forge fmt must
+# never touch this file; Vault.sol is fmt-clean and formatted normally.
+ignore = ["src/SollyWeb3.sol"]
+
 # See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
