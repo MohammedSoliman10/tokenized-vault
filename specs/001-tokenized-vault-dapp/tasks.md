@@ -340,7 +340,7 @@ Repo gate command used below = `cd web && npm run typecheck && npm run lint && n
   (vulnerability reporting, demo-scope disclaimer), `CONTRIBUTING.md` (Conventional Commits,
   Definition of Done gates), `CODE_OF_CONDUCT.md` (Contributor Covenant), `CHANGELOG.md`
   (Keep a Changelog, 0.1.0 entry). Verify: (repo gate command)
-- [ ] T034 [P] Create GitHub templates: `.github/ISSUE_TEMPLATE/bug_report.md`,
+- [X] T034 [P] Create GitHub templates: `.github/ISSUE_TEMPLATE/bug_report.md`,
   `.github/ISSUE_TEMPLATE/feature_request.md`, `.github/PULL_REQUEST_TEMPLATE.md` (includes
   "verification commands run" checklist). Verify: (repo gate command)
 - [ ] T035 Create `.github/workflows/ci.yml`: job `contracts` —
