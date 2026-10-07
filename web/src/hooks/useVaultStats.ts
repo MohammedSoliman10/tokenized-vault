@@ -21,6 +21,18 @@ export function getDeployment(chainId: number): DeploymentEntry | undefined {
   return deployments[String(chainId)]
 }
 
+/**
+ * Chain every read/write targets: the wallet's actual chain when connected,
+ * otherwise the config's current chain. Guards against a wallet switching
+ * networks outside the dapp — addresses and reads must follow the real chain
+ * (FR-002/FR-003), not a stale config value.
+ */
+export function useActiveChainId(): number {
+  const { chainId } = useAccount()
+  const fallbackChainId = useChainId()
+  return chainId ?? fallbackChainId
+}
+
 const ZERO_ADDRESS: Address = '0x0000000000000000000000000000000000000000'
 
 /** One multicall result slot → bigint, or null when absent/failed (never a fake 0). */
@@ -68,7 +80,7 @@ const READ_ERROR = 'Could not load vault statistics - check your connection and 
  */
 export function useVaultStats(): VaultStatsSnapshot {
   const { address } = useAccount()
-  const chainId = useChainId()
+  const chainId = useActiveChainId()
   const entry = deployments[String(chainId)]
   const actor: Address = address ?? ZERO_ADDRESS
   const vault: Address = entry?.vault ?? ZERO_ADDRESS

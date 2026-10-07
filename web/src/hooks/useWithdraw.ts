@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import type { Address, Log } from 'viem'
 import { decodeEventLog } from 'viem'
-import { useAccount, useChainId, usePublicClient, useWriteContract } from 'wagmi'
+import { useAccount, usePublicClient, useWriteContract } from 'wagmi'
 
 import { vaultAbi } from '../abi/Vault'
 import { getTransactionErrorMessage, isUserRejection } from '../lib/errors'
-import { getDeployment, useVaultStats } from './useVaultStats'
+import { getDeployment, useActiveChainId, useVaultStats } from './useVaultStats'
 
 /**
  * Withdraw state machine (data-model §2.3 / FR-016, FR-019):
@@ -43,7 +43,7 @@ function decodeWithdrawOutcome(logs: readonly Log[], vault: Address): WithdrawOu
 
 export function useWithdraw() {
   const { address } = useAccount()
-  const chainId = useChainId()
+  const chainId = useActiveChainId()
   const publicClient = usePublicClient()
   const { writeContractAsync } = useWriteContract()
   const stats = useVaultStats()

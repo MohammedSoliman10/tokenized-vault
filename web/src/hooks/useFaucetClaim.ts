@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import type { Address, Log } from 'viem'
 import { decodeEventLog } from 'viem'
-import { useAccount, useChainId, usePublicClient, useWriteContract } from 'wagmi'
+import { useAccount, usePublicClient, useWriteContract } from 'wagmi'
 
 import { faucetTokenAbi } from '../abi/FaucetToken'
 import { getTransactionErrorMessage, isUserRejection } from '../lib/errors'
-import { getDeployment, useVaultStats } from './useVaultStats'
+import { getDeployment, useActiveChainId, useVaultStats } from './useVaultStats'
 
 /**
  * Faucet claim state machine (data-model §2.4 / FR-005..FR-007, FR-019):
@@ -46,7 +46,7 @@ function decodeClaimedAmount(logs: readonly Log[], token: Address): bigint | nul
 
 export function useFaucetClaim() {
   const { address } = useAccount()
-  const chainId = useChainId()
+  const chainId = useActiveChainId()
   const publicClient = usePublicClient()
   const { writeContractAsync } = useWriteContract()
   const stats = useVaultStats()

@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import type { Address, Log } from 'viem'
 import { decodeEventLog } from 'viem'
-import { useAccount, useChainId, usePublicClient, useWriteContract } from 'wagmi'
+import { useAccount, usePublicClient, useWriteContract } from 'wagmi'
 
 import { erc20Abi } from '../abi/ERC20'
 import { vaultAbi } from '../abi/Vault'
 import { getTransactionErrorMessage, isUserRejection } from '../lib/errors'
-import { getDeployment, useVaultStats } from './useVaultStats'
+import { getDeployment, useActiveChainId, useVaultStats } from './useVaultStats'
 
 /**
  * Deposit state machine (data-model §2.2 / FR-011, FR-012, FR-019):
@@ -52,7 +52,7 @@ function decodeDepositOutcome(logs: readonly Log[], vault: Address): DepositOutc
 
 export function useDeposit() {
   const { address } = useAccount()
-  const chainId = useChainId()
+  const chainId = useActiveChainId()
   const publicClient = usePublicClient()
   const { writeContractAsync } = useWriteContract()
   const stats = useVaultStats()
