@@ -336,7 +336,7 @@ Repo gate command used below = `cd web && npm run typecheck && npm run lint && n
   `specs/001-tokenized-vault-dapp/quickstart.md` and contains only the 5-line happy path
   (clone → `npm install` → `forge test` → Anvil deploy → `npm run dev`).
   Verify: (repo gate command)
-- [ ] T033 [P] Create `LICENSE` (MIT, copyright holder placeholder), `SECURITY.md`
+- [X] T033 [P] Create `LICENSE` (MIT, copyright holder placeholder), `SECURITY.md`
   (vulnerability reporting, demo-scope disclaimer), `CONTRIBUTING.md` (Conventional Commits,
   Definition of Done gates), `CODE_OF_CONDUCT.md` (Contributor Covenant), `CHANGELOG.md`
   (Keep a Changelog, 0.1.0 entry). Verify: (repo gate command)
