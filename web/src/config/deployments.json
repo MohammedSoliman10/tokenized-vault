@@ -1,1 +1,7 @@
-{}
+{
+  "11155111": {
+    "faucetToken": "0x8f6baf9e021a57dddb2a70e7e186e6ffb6f000f3",
+    "vault": "0xbf27a9d9b4f636783b1b19d94b7d1be4e51998b0",
+    "deployBlock": 11865644
+  }
+}
