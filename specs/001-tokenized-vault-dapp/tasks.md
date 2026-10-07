@@ -161,7 +161,7 @@ T007 fixture.)*
   wagmi connectors ONLY, no RainbowKit/ConnectKit), `web/src/main.tsx`
   (WagmiProvider + QueryClientProvider), ensure `web/src/config/deployments.json` exists
   (from T013). Verify: `cd web && npm run typecheck && npm run lint && npm run build`
-- [ ] T016 Create `web/src/lib/vaultMath.ts` per research D8: pure bigint,
+- [X] T016 Create `web/src/lib/vaultMath.ts` per research D8: pure bigint,
   floor division mirroring `Vault.sol`: `estimateShares(amount, totalSupply, vaultBalance)`
   (bootstrap `totalSupply == 0`: returns invalid/throws for `amount <= 1000n`, else
   `amount - 1000n`; else `(amount * totalSupply) / vaultBalance`),
