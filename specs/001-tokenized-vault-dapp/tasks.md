@@ -80,7 +80,7 @@ deploy/ABI tooling, then shared frontend foundations.
 
 ### 2a. Contracts & Foundry tests (before any dependent frontend task)
 
-- [ ] T005 Implement `contracts/src/FaucetToken.sol` per data-model §1.2 / research D3:
+- [X] T005 Implement `contracts/src/FaucetToken.sol` per data-model §1.2 / research D3:
   OZ v5.7.0 ERC20 ("Vault Test Token", "VTT", 18 decimals), `FAUCET_AMOUNT = 1000e18`,
   `COOLDOWN = 24 hours`, `faucet()` minting to `msg.sender` with per-address
   `lastClaimAt` check reverting `error CooldownActive(uint256 availableAt)`
