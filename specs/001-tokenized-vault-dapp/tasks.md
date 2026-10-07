@@ -130,7 +130,7 @@ T007 fixture.)*
 - [X] T011 Create `contracts/script/Deploy.s.sol`: reads key via `vm.envUint("PRIVATE_KEY")`
   (NEVER logs it — logs only deployed addresses), deploys `FaucetToken` then
   `Vault(faucetToken)` per research D6, writes nothing else.
-  Verify: `cd contracts && forge build && PRIVATE_KEY=0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 forge script script/Deploy.s.sol && forge test`
+  Verify: `cd contracts && forge build && forge script script/Deploy.s.sol --rpc-url http://127.0.0.1:8545 --unlocked --sender 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266 --broadcast && forge test`
   (public Anvil/Hardhat key #0 — local simulation only; the real Sepolia key stays in
   gitignored `contracts/.env`)
 - [X] T012 [P] Create shell wrappers `scripts/deploy-anvil.sh` (`set -euo pipefail`,
@@ -353,11 +353,14 @@ Repo gate command used below = `cd web && npm run typecheck && npm run lint && n
   (framework vite, install/build/output settings for `web/` root) and document required
   `VITE_*` env vars in `README.md` deployment section. Verify:
   `node -e "JSON.parse(require('fs').readFileSync('web/vercel.json','utf8'))" && cd web && npm run typecheck && npm run lint && npm test && npm run build`
-- [ ] T037 Secret-hygiene check (quickstart.md Scenario 3): run exactly
+- [X] T037 Secret-hygiene check (quickstart.md Scenario 3): run exactly
   `git check-ignore -q contracts/.env && echo "OK"` and
-  `grep -rE "0x[a-fA-F0-9]{64}" --exclude-dir=.git --exclude-dir=lib --exclude-dir=out --exclude-dir=broadcast --exclude=".env*" . && echo "FAIL" || echo "OK"`
-  — both MUST print `OK` (no key-like literals in tracked files). If `FAIL`, find and remove
-  the leak, then re-run. Verify: re-run both commands → `OK` twice.
+  `git grep -E "0x[a-fA-F0-9]{64}" -- ':(exclude,glob)**/.env*' ':(exclude,glob).env*' && echo "FAIL" || echo "OK"`
+  — both MUST print `OK` (no key-like literals in tracked files; `git grep`
+  scans tracked files only, which is exactly the stated intent — a plain
+  `grep -r` also matches gitignored vendor/build trees and can never pass).
+  If `FAIL`, find and remove the leak, then re-run. Verify: re-run both
+  commands → `OK` twice.
 - [ ] T038 Anvil end-to-end demo run (quickstart.md Scenario 4, manual): start `anvil`, run
   `./scripts/deploy-anvil.sh`, `node scripts/sync-deployments.mjs`,
   `cd contracts && forge build && cd .. && node scripts/sync-abis.mjs`,

@@ -66,11 +66,15 @@ after a deploy) and re-run.
 
 ```bash
 git check-ignore -q contracts/.env && echo "OK"
-grep -rE "0x[a-fA-F0-9]{64}" --exclude-dir=.git --exclude-dir=lib --exclude-dir=out \
-  --exclude-dir=broadcast --exclude=".env*" . && echo "FAIL" || echo "OK"
+git grep -E "0x[a-fA-F0-9]{64}" -- ':(exclude,glob)**/.env*' ':(exclude,glob).env*' \
+  && echo "FAIL" || echo "OK"
 ```
 
-**Expected**: `OK` twice — no key-like literals outside gitignored files.
+**Expected**: `OK` twice — no key-like literals outside gitignored files
+(`git grep` scans exactly the tracked files that would be pushed; a plain
+`grep -r` would also hit gitignored vendor/build trees such as
+`web/node_modules`, `web/dist`, and `contracts/cache`, which contain third-party
+fixtures and bytecode hashes that are not this repo's secrets).
 
 ---
 
