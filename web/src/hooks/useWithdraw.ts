@@ -4,6 +4,7 @@ import { decodeEventLog } from 'viem'
 import { useAccount, usePublicClient, useWriteContract } from 'wagmi'
 
 import { vaultAbi } from '../abi/Vault'
+import { supportedChainId } from '../lib/chainId'
 import { getTransactionErrorMessage, isUserRejection } from '../lib/errors'
 import { getDeployment, useActiveChainId, useVaultStats } from './useVaultStats'
 
@@ -44,7 +45,8 @@ function decodeWithdrawOutcome(logs: readonly Log[], vault: Address): WithdrawOu
 export function useWithdraw() {
   const { address } = useAccount()
   const chainId = useActiveChainId()
-  const publicClient = usePublicClient()
+  // Pinned to the wallet's active chain — receipt waits must never hit a stale client.
+  const publicClient = usePublicClient({ chainId: supportedChainId(chainId) })
   const { writeContractAsync } = useWriteContract()
   const stats = useVaultStats()
   const deployment = getDeployment(chainId)

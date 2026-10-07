@@ -4,6 +4,7 @@ import { decodeEventLog } from 'viem'
 import { useAccount, usePublicClient, useWriteContract } from 'wagmi'
 
 import { faucetTokenAbi } from '../abi/FaucetToken'
+import { supportedChainId } from '../lib/chainId'
 import { getTransactionErrorMessage, isUserRejection } from '../lib/errors'
 import { getDeployment, useActiveChainId, useVaultStats } from './useVaultStats'
 
@@ -47,7 +48,8 @@ function decodeClaimedAmount(logs: readonly Log[], token: Address): bigint | nul
 export function useFaucetClaim() {
   const { address } = useAccount()
   const chainId = useActiveChainId()
-  const publicClient = usePublicClient()
+  // Pinned to the wallet's active chain — receipt waits must never hit a stale client.
+  const publicClient = usePublicClient({ chainId: supportedChainId(chainId) })
   const { writeContractAsync } = useWriteContract()
   const stats = useVaultStats()
   const deployment = getDeployment(chainId)

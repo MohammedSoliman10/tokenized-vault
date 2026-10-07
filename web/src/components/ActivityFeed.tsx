@@ -4,10 +4,11 @@ import { useAccount } from 'wagmi'
 import { ACTIVITY_ERROR, useActivity } from '../hooks/useActivity'
 import { useActiveChainId } from '../hooks/useVaultStats'
 import type { ActivityEntry } from '../hooks/useActivity'
+import { SEPOLIA_CHAIN_ID } from '../lib/chainId'
 import { formatRelativeTime, formatTokenAmountExact } from '../lib/format'
 
 /** FR-022: explorer link only for Sepolia — Anvil rows are plain text, never a dead link. */
-const EXPLORER_CHAIN_ID = 11155111
+const EXPLORER_CHAIN_ID = SEPOLIA_CHAIN_ID
 const EXPLORER_TX_BASE = 'https://sepolia.etherscan.io/tx/'
 
 /** Relative times age without a reload (ui-contracts §7 / US5.4). */

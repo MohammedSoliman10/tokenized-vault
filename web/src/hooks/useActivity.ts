@@ -4,6 +4,7 @@ import type { Address, Hex, Log } from 'viem'
 import { decodeEventLog } from 'viem'
 
 import { vaultAbi } from '../abi/Vault'
+import { supportedChainId } from '../lib/chainId'
 import { getDeployment, useActiveChainId } from './useVaultStats'
 
 /** One activity row (FR-021) — decoded Deposit/Withdraw log, newest 20 kept (FR-023, D11). */
@@ -173,7 +174,9 @@ interface FeedState {
 export function useActivity(): ActivitySnapshot {
   const chainId = useActiveChainId()
   const entry = getDeployment(chainId)
-  const publicClient = usePublicClient()
+  // Pinned client: getLogs / getBlockNumber / getBlock run on the wallet's
+  // active chain — a stale config-state client can never serve the feed.
+  const publicClient = usePublicClient({ chainId: supportedChainId(chainId) })
 
   const vault = entry?.vault
   const deployBlock = entry?.deployBlock
@@ -234,9 +237,10 @@ export function useActivity(): ActivitySnapshot {
     [publicClient, key],
   )
 
-  // Live appends — two watchers share one deduped merge path (FR-023).
-  // A defined entry means getDeployment(chainId) matched ⇒ chain is configured.
-  const watcherChainId = entry !== undefined ? (chainId as 31337 | 11155111) : undefined
+  // Live appends — two watchers share one deduped merge path (FR-023),
+  // both pinned to the wallet's active chain (supportedChainId narrows to the
+  // configured set; undefined + enabled:false on unsupported chains).
+  const watcherChainId = supportedChainId(chainId)
   useWatchContractEvent({
     address: vault,
     abi: vaultAbi,

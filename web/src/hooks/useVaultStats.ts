@@ -5,6 +5,7 @@ import { erc20Abi } from '../abi/ERC20'
 import { faucetTokenAbi } from '../abi/FaucetToken'
 import { vaultAbi } from '../abi/Vault'
 import deploymentsJson from '../config/deployments.json'
+import { supportedChainId } from '../lib/chainId'
 import { sharePriceScaled18, userSharePct1e4 } from '../lib/vaultMath'
 
 /** Address/URLs come from config only (constitution V / FR-028). */
@@ -87,14 +88,20 @@ export function useVaultStats(): VaultStatsSnapshot {
   const token: Address = entry?.faucetToken ?? ZERO_ADDRESS
   const deployed = entry !== undefined
 
+  // Pin reads to the wallet's active chain. chainId MUST be set per contract:
+  // wagmi's useReadContracts overrides a hook-level chainId with config state
+  // (`contractsChainId ?? useChainId()`), so only per-contract ids reach the
+  // query key and multicall. Unsupported wallet chains fall back to the config
+  // default — and `enabled: deployed` keeps reads off (FR-002/FR-003).
+  const readChainId = supportedChainId(chainId)
   const { data, error, isLoading, isFetching, refetch } = useReadContracts({
     contracts: [
-      { address: vault, abi: vaultAbi, functionName: 'totalSupply' },
-      { address: vault, abi: vaultAbi, functionName: 'balanceOf', args: [actor] },
-      { address: token, abi: erc20Abi, functionName: 'balanceOf', args: [vault] },
-      { address: token, abi: erc20Abi, functionName: 'balanceOf', args: [actor] },
-      { address: token, abi: erc20Abi, functionName: 'allowance', args: [actor, vault] },
-      { address: token, abi: faucetTokenAbi, functionName: 'nextClaimAt', args: [actor] },
+      { address: vault, abi: vaultAbi, functionName: 'totalSupply', chainId: readChainId },
+      { address: vault, abi: vaultAbi, functionName: 'balanceOf', args: [actor], chainId: readChainId },
+      { address: token, abi: erc20Abi, functionName: 'balanceOf', args: [vault], chainId: readChainId },
+      { address: token, abi: erc20Abi, functionName: 'balanceOf', args: [actor], chainId: readChainId },
+      { address: token, abi: erc20Abi, functionName: 'allowance', args: [actor, vault], chainId: readChainId },
+      { address: token, abi: faucetTokenAbi, functionName: 'nextClaimAt', args: [actor], chainId: readChainId },
     ],
     query: {
       enabled: deployed,

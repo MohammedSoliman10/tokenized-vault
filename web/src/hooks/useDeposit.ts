@@ -5,6 +5,7 @@ import { useAccount, usePublicClient, useWriteContract } from 'wagmi'
 
 import { erc20Abi } from '../abi/ERC20'
 import { vaultAbi } from '../abi/Vault'
+import { supportedChainId } from '../lib/chainId'
 import { getTransactionErrorMessage, isUserRejection } from '../lib/errors'
 import { getDeployment, useActiveChainId, useVaultStats } from './useVaultStats'
 
@@ -53,7 +54,9 @@ function decodeDepositOutcome(logs: readonly Log[], vault: Address): DepositOutc
 export function useDeposit() {
   const { address } = useAccount()
   const chainId = useActiveChainId()
-  const publicClient = usePublicClient()
+  // Pinned to the wallet's active chain — allowance re-reads and receipt waits
+  // must never hit a stale config-state client after an external switch.
+  const publicClient = usePublicClient({ chainId: supportedChainId(chainId) })
   const { writeContractAsync } = useWriteContract()
   const stats = useVaultStats()
   const deployment = getDeployment(chainId)
