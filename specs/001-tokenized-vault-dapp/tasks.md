@@ -199,7 +199,7 @@ stats (read-only while disconnected).
 connect (FR-004); connect injected wallet → address + network shown; wrong chain → banner +
 disabled actions (FR-003); connected → all six stats visible and chain-consistent (FR-008).
 
-- [ ] T019 [US1] Create `web/src/components/WalletModal.tsx` (headless dialog via
+- [X] T019 [US1] Create `web/src/components/WalletModal.tsx` (headless dialog via
   `@radix-ui/react-dialog`: lists connectors from `useConnectors()` — injected always,
   walletConnect only when registered; `connecting` spinner + `error` states; accessible focus
   trap/Esc/ARIA) and `web/src/components/Header.tsx` (Connect button, truncated address,
