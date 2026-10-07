@@ -52,7 +52,7 @@ validation) → final manual publishing gate.
   typescript-eslint recommended, react-hooks rules, ignore `web/src/abi/` generated files),
   `web/vite.config.ts` (react plugin), `web/index.html`, `web/src/main.tsx`, `web/src/App.tsx`.
   Verify: `cd web && npm install && npm run typecheck && npm run lint && npm run build`
-- [ ] T002 [P] Configure Tailwind v4 + dark theme + Inter: edit `web/vite.config.ts`
+- [X] T002 [P] Configure Tailwind v4 + dark theme + Inter: edit `web/vite.config.ts`
   (`@tailwindcss/vite` plugin), create `web/src/index.css` (`@import "tailwindcss";` CSS-first
   `@theme` tokens, near-black surfaces, accent color) and import Inter from
   `@fontsource/inter` in `web/src/main.tsx`.
