@@ -87,7 +87,7 @@ deploy/ABI tooling, then shared frontend foundations.
   (`availableAt = lastClaim + 24h`), `event Claimed(address indexed caller, uint256 amount)`,
   `function nextClaimAt(address) view returns (uint256)` (0 when never claimed).
   Verify: `cd contracts && forge build && forge test`
-- [ ] T006 [P] FaucetToken unit + fuzz tests in `contracts/test/FaucetToken.t.sol`: claim mints
+- [X] T006 [P] FaucetToken unit + fuzz tests in `contracts/test/FaucetToken.t.sol`: claim mints
   exactly 1000e18 + emits `Claimed`; second claim within 24h reverts `CooldownActive(last+86400)`
   (use `vm.warp` at boundary: `+86399` fails, `+86400` succeeds); `nextClaimAt` returns 0
   before first claim, `last+86400` after; ERC-20 transfer/approve/allowance basics; **FUZZ
