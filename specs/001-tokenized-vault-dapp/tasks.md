@@ -146,7 +146,7 @@ T007 fixture.)*
   `blockNumber`, merges per-chain into `web/src/config/deployments.json`
   (`{chainId: {faucetToken, vault, deployBlock}}`); MUST exit 0 writing `{}` when no
   broadcast exists (fresh clone). Verify: `node scripts/sync-deployments.mjs && cat web/src/config/deployments.json`
-- [ ] T014 [P] Create `scripts/sync-abis.mjs`: reads forge artifacts under `contracts/out/`
+- [X] T014 [P] Create `scripts/sync-abis.mjs`: reads forge artifacts under `contracts/out/`
   and writes `web/src/abi/Vault.ts`, `web/src/abi/FaucetToken.ts`, `web/src/abi/ERC20.ts`
   as exported `... as const` arrays (ERC20 = standard subset of the FaucetToken artifact).
   Verify: `cd contracts && forge build && cd .. && node scripts/sync-abis.mjs && cd web && npm run typecheck`
