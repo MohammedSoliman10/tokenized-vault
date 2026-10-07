@@ -1,4 +1,5 @@
 import { DepositForm } from './components/DepositForm'
+import { FaucetPanel } from './components/FaucetPanel'
 import { Header } from './components/Header'
 import { NetworkSwitcher } from './components/NetworkSwitcher'
 import { StatsGrid } from './components/StatsGrid'
@@ -19,6 +20,7 @@ function App() {
         <div className="mt-6 grid gap-4 md:grid-cols-3">
           <DepositForm />
           <WithdrawForm />
+          <FaucetPanel />
         </div>
       </main>
     </div>

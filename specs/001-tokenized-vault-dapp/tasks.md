@@ -290,7 +290,7 @@ blocked with remaining-time countdown; rejection cancels without changing cooldo
   error`, cooldown derived from `nextClaimAt(account)` (0 ⇒ claimable), re-read after
   receipt; `CooldownActive` decode → countdown message (FR-006/FR-018).
   Verify: `cd web && npm run typecheck && npm run lint && npm run build`
-- [ ] T029 [US4] Create `web/src/components/FaucetPanel.tsx` and wire into `web/src/App.tsx`:
+- [X] T029 [US4] Create `web/src/components/FaucetPanel.tsx` and wire into `web/src/App.tsx`:
   claim button with available/claiming/success/cooldown states, live countdown that re-enables
   the button on expiry without reload, disabled+explained on wrong network/disconnected.
   Verify: `cd web && npm run typecheck && npm run lint && npm run build`
