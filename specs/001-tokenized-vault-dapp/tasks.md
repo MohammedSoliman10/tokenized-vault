@@ -95,7 +95,7 @@ deploy/ABI tooling, then shared frontend foundations.
   second claim reverts `CooldownActive(availableAt)` for every timestamp strictly before
   `lastClaim + 24h` and succeeds at/after it (Constitution II — FaucetToken fuzz tier).
   Verify: `cd contracts && forge test`
-- [ ] T007 Vault unit tests + shared fixture: create `contracts/test/VaultTestBase.sol`
+- [X] T007 Vault unit tests + shared fixture: create `contracts/test/VaultTestBase.sol`
   (deploys FaucetToken + Vault fixture, helper actors) and `contracts/test/Vault.t.sol`:
   deposit/withdraw happy paths and events; bootstrap branch — first deposit `<= 1000` base
   units reverts `AmountTooSmall`, `1001` succeeds (1000 shares to `0xdead`, caller gets 1);
