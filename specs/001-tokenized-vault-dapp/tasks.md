@@ -248,7 +248,7 @@ explanations; wallet rejection shows "cancelled" with no stuck spinner.
   mid-flow** (edge case: allowance revoked between open and confirm), decode all failures
   via `errors.ts`, user rejection → cancelled state returning to idle (FR-019).
   Verify: `cd web && npm run typecheck && npm run lint && npm run build`
-- [ ] T025 [US2] Create `web/src/components/DepositForm.tsx` and wire into `web/src/App.tsx`:
+- [X] T025 [US2] Create `web/src/components/DepositForm.tsx` and wire into `web/src/App.tsx`:
   live share estimate (`vaultMath.estimateShares`), inline guards for empty/zero/over-balance
   amounts (FR-013) and first deposit ≤ 1000 base units with the dead-share explanation
   (FR-014 — wording says "1000 base units", NOT tokens), step indicators for Approve→Deposit,

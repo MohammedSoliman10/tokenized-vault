@@ -4,6 +4,17 @@ import { ProviderNotFoundError, useConnect, useConnectors, type Connector } from
 
 import { getTransactionErrorMessage } from '../lib/errors'
 
+/** Window event name for "an action control needs a wallet" (ui-contracts §1). */
+const OPEN_CONNECT_EVENT = 'vault:open-connect'
+
+/**
+ * Any action control calls this while disconnected to open the wallet modal —
+ * the same trigger as the header Connect button (ui-contracts §1).
+ */
+export function requestWalletConnect(): void {
+  window.dispatchEvent(new CustomEvent(OPEN_CONNECT_EVENT))
+}
+
 interface WalletModalProps {
   open: boolean
   onOpenChange: (open: boolean) => void
@@ -34,6 +45,13 @@ export function WalletModal({ open, onOpenChange }: WalletModalProps) {
   useEffect(() => {
     if (status === 'success') onOpenChange(false)
   }, [status, onOpenChange])
+
+  // action controls can request the modal while disconnected (ui-contracts §1)
+  useEffect(() => {
+    const onOpenRequest = () => onOpenChange(true)
+    window.addEventListener(OPEN_CONNECT_EVENT, onOpenRequest)
+    return () => window.removeEventListener(OPEN_CONNECT_EVENT, onOpenRequest)
+  }, [onOpenChange])
 
   function handleOpenChange(next: boolean) {
     if (next) {
