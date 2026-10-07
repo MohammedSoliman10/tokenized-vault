@@ -50,18 +50,12 @@ contract VaultInvariantTest is VaultTestBase {
     /// (2) totalSupply == sum of all balances, including the dead address (ghost-tracked).
     function invariant_totalSupplyEqualsSumOfBalances() public view {
         assertEq(
-            vault.totalSupply(),
-            handler.ghost_sumShares(),
-            "totalSupply != sum of all balances incl. dead address"
+            vault.totalSupply(), handler.ghost_sumShares(), "totalSupply != sum of all balances incl. dead address"
         );
     }
 
     /// Supporting check: donations can only ever raise the backing ratio.
     function invariant_balanceCoversTotalSupply() public view {
-        assertGe(
-            token.balanceOf(address(vault)),
-            vault.totalSupply(),
-            "vault token balance fell below totalSupply"
-        );
+        assertGe(token.balanceOf(address(vault)), vault.totalSupply(), "vault token balance fell below totalSupply");
     }
 }

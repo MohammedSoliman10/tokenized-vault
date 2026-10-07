@@ -33,22 +33,14 @@ contract FaucetTokenInvariantTest is Test {
 
     /// (3) totalSupply grows by EXACTLY 1000e18 per successful claim — nothing else mints.
     function invariant_supplyGrowsExactly1000e18PerClaim() public view {
-        assertEq(
-            token.totalSupply(),
-            handler.ghost_claimSum(),
-            "totalSupply != 1000e18 * successful claims"
-        );
+        assertEq(token.totalSupply(), handler.ghost_claimSum(), "totalSupply != 1000e18 * successful claims");
     }
 
     /// (4) nextClaimAt(user) never decreases across any claim sequence.
     function invariant_nextClaimAtNeverDecreases() public view {
         for (uint256 i; i < 3; ++i) {
             address who = handler.actors(i);
-            assertGe(
-                token.nextClaimAt(who),
-                handler.ghost_lastNextClaimAt(who),
-                "nextClaimAt decreased"
-            );
+            assertGe(token.nextClaimAt(who), handler.ghost_lastNextClaimAt(who), "nextClaimAt decreased");
         }
     }
 }

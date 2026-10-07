@@ -184,17 +184,14 @@ contract VaultTest is VaultTestBase {
     // ─────────────────────── shares non-transferable ───────────────────────
 
     function test_shares_haveNoTransferApproveSurface() public {
-        (bool okTransfer,) =
-            address(vault).call(abi.encodeWithSignature("transfer(address,uint256)", bob, 1));
+        (bool okTransfer,) = address(vault).call(abi.encodeWithSignature("transfer(address,uint256)", bob, 1));
         assertFalse(okTransfer, "Vault must not expose transfer() for shares");
 
-        (bool okTransferFrom,) = address(vault).call(
-            abi.encodeWithSignature("transferFrom(address,address,uint256)", alice, bob, 1)
-        );
+        (bool okTransferFrom,) =
+            address(vault).call(abi.encodeWithSignature("transferFrom(address,address,uint256)", alice, bob, 1));
         assertFalse(okTransferFrom, "Vault must not expose transferFrom() for shares");
 
-        (bool okApprove,) =
-            address(vault).call(abi.encodeWithSignature("approve(address,uint256)", bob, 1));
+        (bool okApprove,) = address(vault).call(abi.encodeWithSignature("approve(address,uint256)", bob, 1));
         assertFalse(okApprove, "Vault must not expose approve() for shares");
     }
 }

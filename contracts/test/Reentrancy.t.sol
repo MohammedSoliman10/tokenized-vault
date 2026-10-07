@@ -50,11 +50,7 @@ contract ReentrancyTest is Test {
         assertEq(vault.totalSupply(), supplyBefore, "supply changed after failed attack");
         assertEq(vault.balanceOf(alice), aliceBefore, "balances changed after failed attack");
         assertEq(vault.balanceOf(attacker), 0, "attacker must hold no shares");
-        assertEq(
-            evil.balanceOf(address(vault)),
-            vaultTokensBefore,
-            "vault token balance changed after failed attack"
-        );
+        assertEq(evil.balanceOf(address(vault)), vaultTokensBefore, "vault token balance changed after failed attack");
     }
 
     function test_reenterWithdraw_revertsReentrancy_stateConsistent() public {
@@ -76,11 +72,7 @@ contract ReentrancyTest is Test {
         assertEq(vault.totalSupply(), supplyBefore, "supply changed after failed attack");
         assertEq(vault.balanceOf(alice), aliceBefore, "share balance changed after failed attack");
         assertEq(vault.balanceOf(DEAD_ADDRESS()), 1000, "dead shares changed after attack");
-        assertEq(
-            evil.balanceOf(address(vault)),
-            vaultTokensBefore,
-            "vault token balance changed after failed attack"
-        );
+        assertEq(evil.balanceOf(address(vault)), vaultTokensBefore, "vault token balance changed after failed attack");
         assertEq(evil.balanceOf(alice), aliceTokensBefore, "token balance changed after attack");
         assertEq(aliceBefore, aliceShares, "sanity: shares unchanged (withdraw reverted)");
     }

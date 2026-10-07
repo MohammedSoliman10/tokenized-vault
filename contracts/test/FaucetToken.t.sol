@@ -71,9 +71,7 @@ contract FaucetTokenTest is Test {
 
         vm.warp(1_000_000 + 86_399);
         vm.prank(alice);
-        vm.expectRevert(
-            abi.encodeWithSelector(FaucetToken.CooldownActive.selector, 1_000_000 + 86_400)
-        );
+        vm.expectRevert(abi.encodeWithSelector(FaucetToken.CooldownActive.selector, 1_000_000 + 86_400));
         token.faucet();
 
         vm.warp(1_000_000 + 86_400);
@@ -120,11 +118,9 @@ contract FaucetTokenTest is Test {
     /// @dev Constitution II — a second claim reverts CooldownActive(availableAt) for every
     ///      timestamp strictly before lastClaim + 24h, and succeeds at/after it,
     ///      across fuzzed timestamps and addresses.
-    function testFuzz_secondClaim_revertsBeforeCooldown_andSucceedsAtIt(
-        uint256 firstTs,
-        uint256 offset,
-        address who
-    ) public {
+    function testFuzz_secondClaim_revertsBeforeCooldown_andSucceedsAtIt(uint256 firstTs, uint256 offset, address who)
+        public
+    {
         vm.assume(who != address(0));
         firstTs = bound(firstTs, 1, type(uint64).max);
         // offset ∈ [0, 2 days]; probe = firstTs + offset spans one day before..one day after
@@ -142,9 +138,7 @@ contract FaucetTokenTest is Test {
         vm.warp(probe);
         if (probe < availableAt) {
             vm.prank(who);
-            vm.expectRevert(
-                abi.encodeWithSelector(FaucetToken.CooldownActive.selector, availableAt)
-            );
+            vm.expectRevert(abi.encodeWithSelector(FaucetToken.CooldownActive.selector, availableAt));
             token.faucet();
             // failed claim changed nothing
             assertEq(token.balanceOf(who), AMOUNT);

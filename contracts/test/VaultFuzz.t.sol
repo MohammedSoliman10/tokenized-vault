@@ -25,11 +25,7 @@ contract VaultFuzzTest is VaultTestBase {
 
     /// @dev Round trip after a donation (balance ≠ supply): returned amount never exceeds
     ///      what was deposited, and shortfalls stay inside floor-rounding tolerance.
-    function testFuzz_roundTrip_afterDonation_withinFloorTolerance(
-        uint256 a,
-        uint256 b,
-        uint256 d
-    ) public {
+    function testFuzz_roundTrip_afterDonation_withinFloorTolerance(uint256 a, uint256 b, uint256 d) public {
         a = bound(a, DEAD_SHARES + 1, MAX_AMT);
         d = bound(d, 0, a); // donation bounded by the bootstrapped supply
         b = bound(b, 2, MAX_AMT);
@@ -81,11 +77,7 @@ contract VaultFuzzTest is VaultTestBase {
     }
 
     /// @dev Larger deposits from the same state never mint fewer shares (monotonicity).
-    function testFuzz_monotonicity_largerDepositNeverFewerShares(
-        uint256 base,
-        uint256 d1,
-        uint256 delta
-    ) public {
+    function testFuzz_monotonicity_largerDepositNeverFewerShares(uint256 base, uint256 d1, uint256 delta) public {
         base = bound(base, DEAD_SHARES + 1, MAX_AMT);
         d1 = bound(d1, 1, MAX_AMT / 2);
         delta = bound(delta, 1, MAX_AMT / 2);
