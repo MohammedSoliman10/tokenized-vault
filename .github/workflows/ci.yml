@@ -49,10 +49,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node 20 (npm cache)
+      - name: Setup Node 24 (npm cache)
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          # Node 24 = the local + Vercel toolchain. jsdom 30 / undici 8 declare
+          # engines node >=22.19, so Node 20 (EOL) cannot run the vitest jsdom
+          # environment (`webidl.util.markAsUncloneable is not a function`).
+          node-version: 24
           cache: npm
           cache-dependency-path: web/package-lock.json
 

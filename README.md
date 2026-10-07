@@ -99,7 +99,7 @@ wallet's active chain.
 
 ## Quickstart
 
-Happy path — five lines (Foundry + Node 20 installed, `anvil` running in a second terminal):
+Happy path — five lines (Foundry + Node 24 installed, `anvil` running in a second terminal):
 
 ```bash
 git clone --recursive https://github.com/MohammedSoliman10/tokenized-vault.git
