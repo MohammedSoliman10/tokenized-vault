@@ -102,7 +102,7 @@ deploy/ABI tooling, then shared frontend foundations.
   `ZeroAmount` (deposit 0), `ZeroShares` (withdraw 0), `AmountTooSmall`, `TransferFailed`
   (mock returning false); shares non-transferable by construction (no transfer fn — assert
   ABI surface has none). Verify: `cd contracts && forge test`
-- [ ] T008 [P] Fuzz tests in `contracts/test/VaultFuzz.t.sol` (extends `VaultTestBase`):
+- [X] T008 [P] Fuzz tests in `contracts/test/VaultFuzz.t.sol` (extends `VaultTestBase`):
   deposit→withdraw round trip returns within floor-rounding tolerance for fuzzed amounts;
   `shares == amount * totalSupply / balance` (floor) for fuzzed supplies; larger deposits
   never mint fewer shares (monotonicity); first-deposit boundary fuzz around 1000/1001.
