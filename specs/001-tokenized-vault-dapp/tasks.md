@@ -127,7 +127,7 @@ T007 fixture.)*
 
 ### 2b. Deploy & codegen tooling
 
-- [ ] T011 Create `contracts/script/Deploy.s.sol`: reads key via `vm.envUint("PRIVATE_KEY")`
+- [X] T011 Create `contracts/script/Deploy.s.sol`: reads key via `vm.envUint("PRIVATE_KEY")`
   (NEVER logs it — logs only deployed addresses), deploys `FaucetToken` then
   `Vault(faucetToken)` per research D6, writes nothing else.
   Verify: `cd contracts && forge build && PRIVATE_KEY=0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 forge script script/Deploy.s.sol && forge test`
