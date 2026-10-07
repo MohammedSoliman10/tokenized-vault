@@ -343,7 +343,7 @@ Repo gate command used below = `cd web && npm run typecheck && npm run lint && n
 - [X] T034 [P] Create GitHub templates: `.github/ISSUE_TEMPLATE/bug_report.md`,
   `.github/ISSUE_TEMPLATE/feature_request.md`, `.github/PULL_REQUEST_TEMPLATE.md` (includes
   "verification commands run" checklist). Verify: (repo gate command)
-- [ ] T035 Create `.github/workflows/ci.yml`: job `contracts` —
+- [X] T035 Create `.github/workflows/ci.yml`: job `contracts` —
   `actions/checkout` with `submodules: recursive`, foundry-toolchain, `forge fmt --check`,
   `forge test`; job `web` — setup-node 20 with npm cache, `npm ci` in `web/`,
   `npm run typecheck`, `npm run lint`, `npm test`, `npm run build`. (No deploy jobs, no
