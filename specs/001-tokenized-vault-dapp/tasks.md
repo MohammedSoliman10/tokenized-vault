@@ -216,7 +216,7 @@ disabled actions (FR-003); connected → all six stats visible and chain-consist
   at bootstrap, userShares, userTokenBalance, userPct from `userShareBps`); refresh on tx
   receipt/account/network change (FR-009); previous values stay visible while updating
   (SC-002, no blanking). Verify: `cd web && npm run typecheck && npm run lint && npm run build`
-- [ ] T022 [US1] Create `web/src/components/StatsGrid.tsx` (six labeled stats, responsive
+- [X] T022 [US1] Create `web/src/components/StatsGrid.tsx` (six labeled stats, responsive
   360px→desktop, connect-prompt placeholders for user rows when disconnected, bootstrap
   explanatory placeholder for share price — never NaN/0 pretending) and wire US1 into
   `web/src/App.tsx` (header + grid layout, dark theme). Verify:
