@@ -266,7 +266,7 @@ explanations; wallet rejection shows "cancelled" with no stuck spinner.
 **Independent Test**: Share holder withdraws → tokens returned, share balance decreases,
 stats update; Max fills full balance; zero/over-balance blocked; rejection cancels cleanly.
 
-- [ ] T026 [P] [US3] Create `web/src/hooks/useWithdraw.ts`: `idle → withdrawing → success |
+- [X] T026 [P] [US3] Create `web/src/hooks/useWithdraw.ts`: `idle → withdrawing → success |
   error` (data-model §2.3), error decoding via `errors.ts`, rejection → cancelled → idle.
   Verify: `cd web && npm run typecheck && npm run lint && npm run build`
 - [ ] T027 [US3] Create `web/src/components/WithdrawForm.tsx` and wire into `web/src/App.tsx`:
