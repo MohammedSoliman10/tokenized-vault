@@ -53,7 +53,9 @@ export function DepositForm() {
   const connected = address !== undefined
   const parsed = parseAmount(input)
   const amount = parsed.kind === 'ok' ? parsed.value : null
-  const guard = guardMessage(parsed, token.balance, stats.atBootstrap)
+  // The balance guard is meaningful only for a connected account — while
+  // disconnected the zero-address read would mask the base-units rule.
+  const guard = guardMessage(parsed, connected ? token.balance : null, stats.atBootstrap)
   const pending = status === 'approving' || status === 'depositing'
   const disabled = wrongNetwork || !stats.deployed
 
@@ -85,6 +87,7 @@ export function DepositForm() {
     guard === null &&
     amount !== null &&
     amount > 0n &&
+    token.balance !== null && // FR-020: detect insufficient balance before submission
     status !== 'success'
 
   function submit(): void {
