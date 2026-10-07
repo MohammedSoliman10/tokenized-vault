@@ -27,7 +27,9 @@ jobs:
       - name: Install Foundry
         uses: foundry-rs/foundry-toolchain@v1
         with:
-          version: stable
+          # Pinned to the exact local release (forge 1.8.5, commit 51a52c59)
+          # so `forge fmt --check` output cannot drift between local and CI.
+          version: v1.8.5
 
       - name: forge fmt --check
         working-directory: contracts
