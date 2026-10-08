@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-10-08
+
 ### Changed
 
 - Restyled UI with a blue-and-white theme — light surfaces, accent `#375BD2`, WCAG AA
