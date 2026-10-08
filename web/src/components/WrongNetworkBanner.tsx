@@ -41,20 +41,20 @@ export function WrongNetworkBanner() {
   return (
     <div
       role="alert"
-      className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-amber-500/40 bg-amber-500/10 px-4 py-3"
+      className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-warning/40 bg-warning-soft px-4 py-3"
     >
-      <p className="text-sm text-amber-200">
+      <p className="text-sm text-ink">
         Your wallet is on an unsupported network. The vault works on {supportedNames} only.
       </p>
       <div className="flex items-center gap-3">
         {error && (
-          <span className="text-xs text-red-300">{getTransactionErrorMessage(error)}</span>
+          <span className="text-xs text-error">{getTransactionErrorMessage(error)}</span>
         )}
         <button
           type="button"
           onClick={() => void handleSwitch()}
           disabled={isPending}
-          className="rounded-full bg-amber-500 px-4 py-1.5 text-sm font-medium text-black transition-colors hover:bg-amber-400 disabled:opacity-60 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-300"
+          className="rounded-full bg-accent px-4 py-1.5 text-sm font-medium text-white transition-colors hover:bg-accent-hover active:bg-accent-pressed disabled:cursor-not-allowed disabled:bg-disabled-bg disabled:text-ink-muted focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
         >
           {isPending ? 'Switching…' : 'Switch network'}
         </button>

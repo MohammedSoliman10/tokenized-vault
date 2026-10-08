@@ -13,14 +13,14 @@ interface StatCardProps {
 /** Never renders NaN/0 pretending to be real: falls back to a labeled placeholder. */
 function StatCard({ label, value, placeholder, hint }: StatCardProps) {
   return (
-    <div className="min-w-0 rounded-xl border border-edge bg-surface-raised px-4 py-3">
-      <p className="truncate text-xs text-gray-400">{label}</p>
-      <p className="mt-1 truncate text-lg font-semibold text-white">
+    <div className="min-w-0 rounded-xl border border-edge bg-surface-raised px-4 py-3 shadow-sm">
+      <p className="truncate text-xs text-ink-muted">{label}</p>
+      <p className="mt-1 truncate text-lg font-semibold text-ink">
         {value ?? (
-          <span className="text-sm font-normal text-gray-500">{placeholder ?? '—'}</span>
+          <span className="text-sm font-normal text-ink-muted">{placeholder ?? '—'}</span>
         )}
       </p>
-      {hint && <p className="mt-1 text-xs text-gray-500">{hint}</p>}
+      {hint && <p className="mt-1 text-xs text-ink-muted">{hint}</p>}
     </div>
   )
 }
@@ -53,18 +53,18 @@ export function StatsGrid() {
       <div className="mb-3 flex items-center justify-between gap-3">
         <h2
           id="dashboard-heading"
-          className="text-xs font-semibold uppercase tracking-wider text-gray-400"
+          className="text-xs font-semibold uppercase tracking-wider text-ink-muted"
         >
           Dashboard
         </h2>
         <div className="flex items-center gap-3 text-xs">
           {deployed && isFetching && !isLoading && (
-            <span className="text-gray-500" aria-live="polite">
+            <span className="text-ink-muted" aria-live="polite">
               updating…
             </span>
           )}
           {error && (
-            <span role="alert" className="text-red-300">
+            <span role="alert" className="text-error">
               {error}
             </span>
           )}
@@ -72,7 +72,7 @@ export function StatsGrid() {
       </div>
 
       {!deployed ? (
-        <p className="rounded-xl border border-edge bg-surface-raised px-4 py-8 text-center text-sm text-gray-400">
+        <p className="rounded-xl border border-edge bg-surface-raised px-4 py-8 text-center text-sm text-ink-muted shadow-sm">
           Vault contracts are not deployed on this network yet.
         </p>
       ) : (

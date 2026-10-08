@@ -40,7 +40,7 @@ export function Header() {
   return (
     <header className="sticky top-0 z-30 border-b border-edge bg-surface-raised/90 backdrop-blur">
       <div className="mx-auto flex w-full max-w-5xl items-center justify-between gap-3 px-4 py-3">
-        <span className="text-base font-semibold tracking-tight text-white">
+        <span className="text-base font-semibold tracking-tight text-ink">
           Tokenized Vault
         </span>
 
@@ -49,14 +49,14 @@ export function Header() {
             <span
               className={
                 supported
-                  ? 'hidden items-center gap-2 rounded-full border border-edge bg-surface-overlay px-3 py-1 text-xs text-gray-300 sm:flex'
-                  : 'flex items-center gap-2 rounded-full border border-red-500/50 bg-red-500/10 px-3 py-1 text-xs text-red-300'
+                  ? 'hidden items-center gap-2 rounded-full border border-edge bg-surface-overlay px-3 py-1 text-xs text-ink-muted sm:flex'
+                  : 'flex items-center gap-2 rounded-full border border-error/50 bg-error-soft px-3 py-1 text-xs text-error'
               }
             >
               <span
                 aria-hidden
                 className={
-                  supported ? 'h-2 w-2 rounded-full bg-emerald-400' : 'h-2 w-2 rounded-full bg-red-400'
+                  supported ? 'h-2 w-2 rounded-full bg-success' : 'h-2 w-2 rounded-full bg-error'
                 }
               />
               {supported && chain ? chain.name : 'Unsupported network'}
@@ -70,7 +70,7 @@ export function Header() {
                 aria-haspopup="menu"
                 aria-expanded={menuOpen}
                 onClick={() => setMenuOpen((open) => !open)}
-                className="rounded-full border border-edge bg-surface-overlay px-3 py-1 font-mono text-xs text-white transition-colors hover:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                className="rounded-full border border-edge-strong bg-surface-overlay px-3 py-1 font-mono text-xs text-ink transition-colors hover:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
               >
                 {truncateAddress(address)}
               </button>
@@ -87,7 +87,7 @@ export function Header() {
                       setMenuOpen(false)
                       disconnect()
                     }}
-                    className="w-full rounded px-3 py-2 text-left text-sm text-red-300 transition-colors hover:bg-surface-overlay focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                    className="w-full rounded px-3 py-2 text-left text-sm text-error transition-colors hover:bg-section focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                   >
                     Disconnect
                   </button>
@@ -100,7 +100,7 @@ export function Header() {
             <button
               type="button"
               onClick={() => setModalOpen(true)}
-              className="rounded-full bg-accent px-4 py-1.5 text-sm font-medium text-white transition-colors hover:bg-accent-hover focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+              className="rounded-full bg-accent px-4 py-1.5 text-sm font-medium text-white transition-colors hover:bg-accent-hover active:bg-accent-pressed focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
             >
               Connect
             </button>

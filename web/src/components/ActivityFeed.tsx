@@ -33,7 +33,7 @@ function TxCell({ entry, chainId }: { entry: ActivityEntry; chainId: number }) {
   }
   // Local network (31337): plain hash text — FR-022 "never a dead/broken link".
   return (
-    <span className="font-mono text-gray-400" title={entry.transactionHash}>
+    <span className="font-mono text-ink-muted" title={entry.transactionHash}>
       {shortHash(entry.transactionHash)}
     </span>
   )
@@ -62,15 +62,15 @@ export function ActivityFeed() {
       <div className="mb-3 flex items-center justify-between gap-3">
         <h2
           id="activity-heading"
-          className="text-xs font-semibold uppercase tracking-wider text-gray-400"
+          className="text-xs font-semibold uppercase tracking-wider text-ink-muted"
         >
           Recent activity
         </h2>
-        <span className="text-xs text-gray-500">Newest 20 deposits and withdrawals</span>
+        <span className="text-xs text-ink-muted">Newest 20 deposits and withdrawals</span>
       </div>
 
       {status === 'unavailable' ? (
-        <p className="rounded-xl border border-edge bg-surface-raised px-4 py-8 text-center text-sm text-gray-400">
+        <p className="rounded-xl border border-edge bg-surface-raised px-4 py-8 text-center text-sm text-ink-muted shadow-sm">
           Vault contracts are not deployed on this network yet.
         </p>
       ) : (
@@ -79,13 +79,13 @@ export function ActivityFeed() {
           {status === 'error' && (
             <div
               role="alert"
-              className="mb-3 flex flex-wrap items-center gap-3 rounded-lg border border-red-500/40 bg-red-500/10 px-3 py-2 text-xs text-red-200"
+              className="mb-3 flex flex-wrap items-center gap-3 rounded-lg border border-error/40 bg-error-soft px-3 py-2 text-xs text-error"
             >
               <span>{ACTIVITY_ERROR}</span>
               <button
                 type="button"
                 onClick={retry}
-                className="rounded border border-red-500/50 px-2 py-1 font-medium hover:bg-red-500/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                className="rounded border border-error/50 px-2 py-1 font-medium hover:bg-error/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
               >
                 Retry
               </button>
@@ -93,11 +93,11 @@ export function ActivityFeed() {
           )}
 
           {entries.length > 0 ? (
-            <div className="overflow-x-auto rounded-xl border border-edge bg-surface-raised">
+            <div className="overflow-x-auto rounded-xl border border-edge bg-surface-raised shadow-sm">
               <table className="w-full min-w-[640px] text-left text-sm">
                 <caption className="sr-only">Vault deposit and withdrawal activity, newest first</caption>
                 <thead>
-                  <tr className="border-b border-edge text-xs text-gray-400">
+                  <tr className="border-b border-edge text-xs text-ink-muted">
                     <th scope="col" className="px-3 py-2 font-medium">Type</th>
                     <th scope="col" className="px-3 py-2 font-medium">Account</th>
                     <th scope="col" className="px-3 py-2 font-medium">Amount (tokens)</th>
@@ -115,14 +115,14 @@ export function ActivityFeed() {
                       <tr
                         key={`${entry.transactionHash}-${entry.logIndex}`}
                         className={`border-b border-edge/60 last:border-b-0 ${
-                          isSelf ? 'border-l-2 border-l-accent bg-surface-overlay' : ''
+                          isSelf ? 'border-l-2 border-l-accent bg-accent-soft' : ''
                         }`}
                       >
                         <td className="px-3 py-2">
                           <span
                             className={`rounded border px-1.5 py-0.5 text-xs ${
                               entry.type === 'Deposit'
-                                ? 'border-emerald-500/40 text-emerald-300'
+                                ? 'border-success/40 text-success'
                                 : 'border-accent/40 text-accent'
                             }`}
                           >
@@ -131,20 +131,20 @@ export function ActivityFeed() {
                         </td>
                         <td
                           className={`px-3 py-2 font-mono text-xs ${
-                            isSelf ? 'text-white' : 'text-gray-300'
+                            isSelf ? 'text-ink' : 'text-ink-muted'
                           }`}
                           title={entry.account}
                         >
                           {isSelf ? 'you' : ''}{' '}
                           {`${entry.account.slice(0, 6)}…${entry.account.slice(-4)}`}
                         </td>
-                        <td className="px-3 py-2 text-gray-200">
+                        <td className="px-3 py-2 text-ink">
                           {formatTokenAmountExact(entry.amount)}
                         </td>
-                        <td className="px-3 py-2 text-gray-200">
+                        <td className="px-3 py-2 text-ink">
                           {formatTokenAmountExact(entry.shares)}
                         </td>
-                        <td className="px-3 py-2 text-gray-400">
+                        <td className="px-3 py-2 text-ink-muted">
                           {entry.timestamp !== null ? formatRelativeTime(entry.timestamp, now) : '—'}
                         </td>
                         <td className="px-3 py-2 text-xs">
@@ -157,11 +157,11 @@ export function ActivityFeed() {
               </table>
             </div>
           ) : status === 'loading' ? (
-            <p className="rounded-xl border border-edge bg-surface-raised px-4 py-6 text-center text-sm text-gray-500">
+            <p className="rounded-xl border border-edge bg-surface-raised px-4 py-6 text-center text-sm text-ink-muted shadow-sm">
               Loading activity…
             </p>
           ) : status === 'ready' ? (
-            <p className="rounded-xl border border-edge bg-surface-raised px-4 py-6 text-center text-sm text-gray-400">
+            <p className="rounded-xl border border-edge bg-surface-raised px-4 py-6 text-center text-sm text-ink-muted shadow-sm">
               No activity yet — deposits and withdrawals will appear here.
             </p>
           ) : null}

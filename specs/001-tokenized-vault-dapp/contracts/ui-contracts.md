@@ -77,7 +77,12 @@ Error wording lives in [chain-interface.md §4](./chain-interface.md); state det
 
 ## 8. Global experience rules
 
-- Dark theme, Inter, minimal; usable 360px → desktop (FR-024).
+- Blue-and-white light theme (white surfaces, accent `#375BD2`, navy text, muted blue-gray
+  secondary text), Inter, minimal; usable 360px → desktop (FR-024). All colors come from
+  centralized Tailwind v4 `@theme` tokens in `web/src/index.css` — the `accent` token name
+  is part of the feed-highlight contract (`border-l-accent`). Status colors and focus rings
+  meet WCAG AA: 4.5:1 text, 3:1 focus rings and control boundaries. No gradients or
+  decorative illustrations.
 - Every transaction path resolves visibly: pending within 1s, then success/error/cancelled
   (SC-002) — no indefinite spinners.
 - Raw revert strings, stack traces, or `undefined` values are never rendered (FR-018).

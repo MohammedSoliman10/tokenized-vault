@@ -44,7 +44,7 @@ constitution's Definition of Done gates remain `forge test` / `tsc --noEmit` / l
 
 **Target Platform**: Modern browsers with injected wallets (MetaMask) and optional
 WalletConnect; exactly two chains — Anvil (31337) and Sepolia (11155111); responsive 360px →
-desktop, dark theme, Inter
+desktop, blue-and-white light theme, Inter
 
 **Project Type**: Monorepo — smart contracts + web dapp (npm per package, no workspace tooling)
 
@@ -155,7 +155,7 @@ specs/001-tokenized-vault-dapp/
 │   │   │   └── ... (App/Header/toast/status primitives)
 │   │   ├── App.tsx
 │   │   ├── main.tsx               # WagmiProvider + QueryClientProvider
-│   │   └── index.css              # Tailwind v4 CSS-first config + dark theme + Inter
+│   │   └── index.css              # Tailwind v4 CSS-first config + blue-and-white light theme + Inter
 │   ├── .env.example               # VITE_SEPOLIA_RPC_URL, VITE_REOWN_PROJECT_ID (placeholders)
 │   ├── package.json               # scripts: dev, build, preview, typecheck, lint, test
 │   ├── eslint.config.js           # ESLint 9 flat config (typescript-eslint, react-hooks)

@@ -81,7 +81,7 @@ export function NetworkSwitcher() {
       <div
         role="group"
         aria-label="Network"
-        className="flex rounded-full border border-edge bg-surface-overlay p-1"
+        className="flex rounded-full border border-edge bg-section p-1"
       >
         {chains.map((chain) => {
           const active = chainId === chain.id
@@ -95,14 +95,14 @@ export function NetworkSwitcher() {
               onClick={() => void handleSwitch(chain)}
               className={
                 active
-                  ? 'flex items-center gap-2 rounded-full bg-accent px-4 py-1.5 text-xs font-medium text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent disabled:opacity-70'
-                  : 'flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-medium text-gray-400 transition-colors hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-accent disabled:opacity-70'
+                  ? 'flex items-center gap-2 rounded-full bg-accent px-4 py-1.5 text-xs font-medium text-white transition-colors hover:bg-accent-hover active:bg-accent-pressed focus:outline-none focus-visible:ring-2 focus-visible:ring-accent disabled:bg-disabled-bg disabled:text-ink-muted'
+                  : 'flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-medium text-ink transition-colors hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent disabled:bg-disabled-bg disabled:text-ink-muted'
               }
             >
               {busy && (
                 <span
                   aria-hidden
-                  className="h-3 w-3 animate-spin rounded-full border-2 border-white border-t-transparent"
+                  className="h-3 w-3 animate-spin rounded-full border-2 border-current border-t-transparent"
                 />
               )}
               {chain.name}
@@ -111,10 +111,10 @@ export function NetworkSwitcher() {
         })}
       </div>
       {!connected && (
-        <p className="text-xs text-gray-500">Connect a wallet to switch networks.</p>
+        <p className="text-xs text-ink-muted">Connect a wallet to switch networks.</p>
       )}
       {error && (
-        <p role="alert" className="max-w-xs text-right text-xs text-red-300">
+        <p role="alert" className="max-w-xs text-right text-xs text-error">
           {error}
         </p>
       )}

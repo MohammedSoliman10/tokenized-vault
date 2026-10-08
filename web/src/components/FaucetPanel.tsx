@@ -49,18 +49,18 @@ export function FaucetPanel() {
   return (
     <section
       aria-labelledby="faucet-heading"
-      className="rounded-xl border border-edge bg-surface-raised p-4"
+      className="rounded-xl border border-edge bg-surface-raised p-4 shadow-sm"
     >
-      <h2 id="faucet-heading" className="text-sm font-semibold text-white">
+      <h2 id="faucet-heading" className="text-sm font-semibold text-ink">
         Faucet
       </h2>
-      <p className="mt-1 text-xs text-gray-400">
+      <p className="mt-1 text-xs text-ink-muted">
         1000 free test tokens per address every 24 hours.
       </p>
 
       {inCooldown && (
         <p
-          className="mt-3 text-xs text-amber-300"
+          className="mt-3 text-xs text-warning"
           aria-describedby="faucet-cooldown-value"
         >
           Cooldown active — faucet ready in{' '}
@@ -71,7 +71,7 @@ export function FaucetPanel() {
       )}
 
       {disabled && (
-        <p className="mt-3 text-xs text-gray-500">
+        <p className="mt-3 text-xs text-ink-muted">
           {wrongNetwork
             ? 'Switch your wallet to a supported network to claim.'
             : 'Vault is not deployed on this network.'}
@@ -82,7 +82,7 @@ export function FaucetPanel() {
         <button
           type="button"
           onClick={requestWalletConnect}
-          className="mt-3 w-full rounded-lg bg-accent px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-accent-hover focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+          className="mt-3 w-full rounded-lg bg-accent px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-accent-hover active:bg-accent-pressed focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
         >
           Connect wallet to claim
         </button>
@@ -91,12 +91,12 @@ export function FaucetPanel() {
           type="button"
           onClick={() => void claim()}
           disabled={buttonDisabled}
-          className="mt-3 flex w-full items-center justify-center gap-2 rounded-lg bg-accent px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+          className="mt-3 flex w-full items-center justify-center gap-2 rounded-lg bg-accent px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-accent-hover active:bg-accent-pressed disabled:cursor-not-allowed disabled:bg-disabled-bg disabled:text-ink-muted focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
         >
           {pending && (
             <span
               aria-hidden
-              className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"
+              className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent"
             />
           )}
           {pending ? 'Claiming…' : inCooldown ? 'Cooldown' : 'Claim 1000 tokens'}
@@ -107,7 +107,7 @@ export function FaucetPanel() {
       {status === 'success' && (
         <div
           role="status"
-          className="mt-3 rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-3 py-2 text-xs text-emerald-200"
+          className="mt-3 rounded-lg border border-success/40 bg-success-soft px-3 py-2 text-xs text-success"
         >
           {outcome
             ? `Claimed ${formatTokenAmountExact(outcome.amount)} tokens — balance updated.`
@@ -115,7 +115,7 @@ export function FaucetPanel() {
           <button
             type="button"
             onClick={reset}
-            className="ml-2 underline hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+            className="ml-2 underline hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
           >
             Dismiss
           </button>
@@ -126,13 +126,13 @@ export function FaucetPanel() {
       {status === 'error' && error && (
         <div
           role="alert"
-          className="mt-3 rounded-lg border border-red-500/40 bg-red-500/10 px-3 py-2 text-xs text-red-200"
+          className="mt-3 rounded-lg border border-error/40 bg-error-soft px-3 py-2 text-xs text-error"
         >
           {error}
           <button
             type="button"
             onClick={reset}
-            className="ml-2 underline hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+            className="ml-2 underline hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
           >
             Dismiss
           </button>
@@ -143,13 +143,13 @@ export function FaucetPanel() {
       {status === 'cancelled' && (
         <div
           role="status"
-          className="mt-3 rounded-lg border border-edge bg-surface-overlay px-3 py-2 text-xs text-gray-300"
+          className="mt-3 rounded-lg border border-edge bg-section px-3 py-2 text-xs text-ink-muted"
         >
           Transaction cancelled — no changes were made.
           <button
             type="button"
             onClick={reset}
-            className="ml-2 underline hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+            className="ml-2 underline hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
           >
             Dismiss
           </button>

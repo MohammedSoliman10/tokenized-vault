@@ -147,8 +147,8 @@ CI runs the same commands on every push — see [.github/workflows/ci.yml](.gith
 ## Screenshots
 
 The first shot is the **live production site**; the rest were captured by the automated
-browser walkthrough against local Anvil (chain 31337). All views are 1280×800 dark-theme
-except the mobile shot (360 px viewport).
+browser walkthrough against local Anvil (chain 31337). All views are 1280×800 in the
+blue-and-white light theme except the mobile shot (360 px viewport).
 
 | Screenshot | What it shows |
 |---|---|

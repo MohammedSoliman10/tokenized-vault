@@ -1,24 +1,56 @@
 @import "tailwindcss";
 
-/* CSS-first theme tokens (Tailwind v4) — dark, near-black surfaces */
+/*
+ * Blue-and-white theme (FR-024) — all colors live here as Tailwind v4
+ * theme tokens. Components must use these classes only; no hardcoded hex.
+ *
+ * Contrast (WCAG 2.1): every text pair ≥ 4.5:1, every focus ring and
+ * control boundary ≥ 3:1 — audited in the theme PR's contrast table.
+ */
 @theme {
-  --color-surface: #0a0a0b;
-  --color-surface-raised: #141417;
-  --color-surface-overlay: #1c1c21;
-  --color-edge: #2a2a31;
-  --color-accent: #6366f1;
-  --color-accent-hover: #4f46e5;
+  /* Brand accent (primary blue) */
+  --color-accent: #375bd2;
+  --color-accent-hover: #2a47a8;
+  --color-accent-pressed: #1f3785;
+  --color-accent-soft: #eef1fb;
+
+  /* Surfaces */
+  --color-surface: #ffffff;
+  --color-surface-raised: #ffffff;
+  --color-surface-overlay: #ffffff;
+  --color-section: #f5f7fd;
+  --color-scrim: #0b1530;
+
+  /* Edges — `edge` = decorative card borders, `edge-strong` = control boundaries */
+  --color-edge: #e1e7f8;
+  --color-edge-strong: #7b89b7;
+
+  /* Text */
+  --color-ink: #0b1530;
+  --color-ink-muted: #5b6b8c;
+
+  /* Status — re-tuned for light backgrounds */
+  --color-success: #147a3a;
+  --color-success-soft: #e9f6ee;
+  --color-warning: #b45309;
+  --color-warning-soft: #fdf3e0;
+  --color-error: #b91c1c;
+  --color-error-soft: #fdecec;
+
+  /* Disabled controls: light gray + muted text */
+  --color-disabled-bg: #eef1f6;
+
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
 }
 
 html {
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 body {
   margin: 0;
   background-color: var(--color-surface);
-  color: #e8e8ec;
+  color: var(--color-ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
 }
