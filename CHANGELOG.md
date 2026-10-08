@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Restyled UI with a blue-and-white theme — light surfaces, accent `#375BD2`, WCAG AA
+  contrast across all text/focus pairs, all colors centralized in Tailwind `@theme` tokens;
+  README screenshots retaken in the new theme.
+
 ## [0.1.0] - 2026-10-08
 
 First release of the Tokenized Vault demo (feature `001-tokenized-vault-dapp`).

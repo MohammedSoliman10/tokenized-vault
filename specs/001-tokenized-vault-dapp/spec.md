@@ -249,7 +249,8 @@ appears with amounts, account, time, and an explorer link where applicable.
 
 **Experience and design**
 
-- **FR-024**: The interface MUST use a dark, clean, minimal visual design and MUST be usable on
+- **FR-024**: The interface MUST use a clean, minimal visual design (blue-and-white light
+  theme) and MUST be usable on
   screen widths from 360px mobile to desktop.
 
 **Contracts, deployment, and repository deliverables**

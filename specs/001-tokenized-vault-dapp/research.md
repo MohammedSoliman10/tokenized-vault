@@ -250,17 +250,21 @@ implementation choices so the plan is unambiguous for `/speckit.tasks`.
   `contracts/` from the built app and would leak build paths); a backend registry (rejected —
   no backend).
 
-## D16. Design system (dark theme, Inter)
+## D16. Design system (blue-and-white light theme, Inter)
 
 - **Decision**: Tailwind v4 CSS-first configuration in `index.css` (`@import "tailwindcss";`
-  + `@theme` tokens): near-black surfaces (`zinc-950`-family), single accent color, Inter via
+  + `@theme` tokens): white surfaces with light blue-gray borders, single accent blue
+  (`#375BD2`, darker hover/pressed), navy text, muted blue-gray secondary text, status
+  colors re-tuned for light backgrounds (WCAG AA verified), Inter via
   `@fontsource/inter` (self-hosted bundle), responsive single-column → grid layouts.
   Verified current: Tailwind v4 ships `@tailwindcss/vite` (v4.2.2+ supports Vite 8).
-- **Rationale**: Spec FR-024 (dark, clean, minimal, 360px→desktop) + owner's "dark theme,
-  Inter"; self-hosting avoids third-party font requests (privacy + offline dev).
+- **Rationale**: Spec FR-024 (clean, minimal, 360px→desktop) + the owner's restyle
+  direction (blue-and-white theme, colors only); self-hosting avoids third-party font
+  requests (privacy + offline dev).
 - **Alternatives considered**: Tailwind v3 + `tailwind.config.js` (rejected — v4 is current
   and simpler with Vite); Google Fonts CDN (rejected — external dependency); `next/font`
-  (N/A — not Next.js).
+  (N/A — not Next.js). The original dark theme was superseded by the blue-and-white
+  restyle (owner direction).
 
 ## D17. TypeScript, lint, and verification tooling
 

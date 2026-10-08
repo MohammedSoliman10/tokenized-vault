@@ -99,22 +99,22 @@ export function DepositForm() {
     state === 'active'
       ? 'text-accent'
       : state === 'done'
-        ? 'text-emerald-400'
+        ? 'text-success'
         : state === 'skip'
-          ? 'text-gray-600 line-through'
-          : 'text-gray-500'
+          ? 'text-ink-muted line-through'
+          : 'text-ink-muted'
 
   return (
     <section
       aria-labelledby="deposit-heading"
-      className="rounded-xl border border-edge bg-surface-raised p-4"
+      className="rounded-xl border border-edge bg-surface-raised p-4 shadow-sm"
     >
-      <h2 id="deposit-heading" className="text-sm font-semibold text-white">
+      <h2 id="deposit-heading" className="text-sm font-semibold text-ink">
         Deposit
       </h2>
-      <p className="mt-1 text-xs text-gray-400">Tokens in → shares out (approve, then deposit).</p>
+      <p className="mt-1 text-xs text-ink-muted">Tokens in → shares out (approve, then deposit).</p>
 
-      <label className="mt-3 block text-xs text-gray-400" htmlFor="deposit-amount">
+      <label className="mt-3 block text-xs text-ink-muted" htmlFor="deposit-amount">
         Token amount
       </label>
       <input
@@ -125,10 +125,10 @@ export function DepositForm() {
         value={input}
         disabled={disabled || pending}
         onChange={(event) => setInput(event.target.value)}
-        className="mt-1 w-full rounded-lg border border-edge bg-surface-overlay px-3 py-2 text-sm text-white placeholder:text-gray-600 disabled:opacity-60 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+        className="mt-1 w-full rounded-lg border border-edge-strong bg-surface-overlay px-3 py-2 text-sm text-ink placeholder:text-ink-muted disabled:bg-disabled-bg disabled:text-ink-muted focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
       />
 
-      <p className="mt-2 min-h-4 text-xs text-gray-400" aria-live="polite">
+      <p className="mt-2 min-h-4 text-xs text-ink-muted" aria-live="polite">
         {estimate !== null && estimate > 0n
           ? `≈ ${formatTokenAmountExact(estimate)} shares`
           : amount !== null && amount > 0n && estimate === 0n
@@ -137,12 +137,12 @@ export function DepositForm() {
       </p>
 
       {guard && (
-        <p role="alert" className="mt-1 text-xs text-amber-300">
+        <p role="alert" className="mt-1 text-xs text-warning">
           {guard}
         </p>
       )}
       {disabled && (
-        <p className="mt-1 text-xs text-gray-500">
+        <p className="mt-1 text-xs text-ink-muted">
           {wrongNetwork
             ? 'Switch your wallet to a supported network to deposit.'
             : 'Vault is not deployed on this network.'}
@@ -160,7 +160,7 @@ export function DepositForm() {
             />
           )}
         </li>
-        <li aria-hidden className="text-gray-600">
+        <li aria-hidden className="text-ink-muted">
           →
         </li>
         <li className={stepClass(status === 'depositing' ? 'active' : status === 'success' ? 'done' : 'idle')}>
@@ -173,7 +173,7 @@ export function DepositForm() {
           )}
         </li>
         {amount !== null && amount > 0n && approveState === 'skip' && (
-          <li className="ml-auto text-gray-600">approval not needed</li>
+          <li className="ml-auto text-ink-muted">approval not needed</li>
         )}
       </ol>
 
@@ -181,7 +181,7 @@ export function DepositForm() {
         <button
           type="button"
           onClick={requestWalletConnect}
-          className="mt-3 w-full rounded-lg bg-accent px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-accent-hover focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+          className="mt-3 w-full rounded-lg bg-accent px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-accent-hover active:bg-accent-pressed focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
         >
           Connect wallet to deposit
         </button>
@@ -190,7 +190,7 @@ export function DepositForm() {
           type="button"
           onClick={submit}
           disabled={!canDeposit}
-          className="mt-3 w-full rounded-lg bg-accent px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+          className="mt-3 w-full rounded-lg bg-accent px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-accent-hover active:bg-accent-pressed disabled:cursor-not-allowed disabled:bg-disabled-bg disabled:text-ink-muted focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
         >
           {status === 'approving'
             ? 'Approving…'
@@ -204,7 +204,7 @@ export function DepositForm() {
       {status === 'success' && (
         <div
           role="status"
-          className="mt-3 rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-3 py-2 text-xs text-emerald-200"
+          className="mt-3 rounded-lg border border-success/40 bg-success-soft px-3 py-2 text-xs text-success"
         >
           {outcome
             ? `Deposited ${formatTokenAmountExact(outcome.amount)} tokens → minted ${formatTokenAmountExact(outcome.shares)} shares.`
@@ -212,7 +212,7 @@ export function DepositForm() {
           <button
             type="button"
             onClick={reset}
-            className="ml-2 underline hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+            className="ml-2 underline hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
           >
             Dismiss
           </button>
@@ -223,13 +223,13 @@ export function DepositForm() {
       {status === 'error' && error && (
         <div
           role="alert"
-          className="mt-3 rounded-lg border border-red-500/40 bg-red-500/10 px-3 py-2 text-xs text-red-200"
+          className="mt-3 rounded-lg border border-error/40 bg-error-soft px-3 py-2 text-xs text-error"
         >
           {error}
           <button
             type="button"
             onClick={reset}
-            className="ml-2 underline hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+            className="ml-2 underline hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
           >
             Dismiss
           </button>
@@ -240,13 +240,13 @@ export function DepositForm() {
       {status === 'cancelled' && (
         <div
           role="status"
-          className="mt-3 rounded-lg border border-edge bg-surface-overlay px-3 py-2 text-xs text-gray-300"
+          className="mt-3 rounded-lg border border-edge bg-section px-3 py-2 text-xs text-ink-muted"
         >
           Transaction cancelled — no changes were made.
           <button
             type="button"
             onClick={reset}
-            className="ml-2 underline hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+            className="ml-2 underline hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
           >
             Dismiss
           </button>

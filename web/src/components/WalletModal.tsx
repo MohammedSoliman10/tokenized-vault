@@ -69,23 +69,23 @@ export function WalletModal({ open, onOpenChange }: WalletModalProps) {
   return (
     <Dialog.Root open={open} onOpenChange={handleOpenChange}>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-40 bg-black/70" />
+        <Dialog.Overlay className="fixed inset-0 z-40 bg-scrim/70" />
         <Dialog.Content
           aria-label="Connect wallet"
           className="fixed left-1/2 top-1/2 z-50 w-[calc(100vw-2rem)] max-w-sm -translate-x-1/2 -translate-y-1/2 rounded-xl border border-edge bg-surface-raised p-6 shadow-xl focus:outline-none"
         >
           <div className="flex items-start justify-between gap-4">
             <div>
-              <Dialog.Title className="text-lg font-semibold text-white">
+              <Dialog.Title className="text-lg font-semibold text-ink">
                 Connect wallet
               </Dialog.Title>
-              <Dialog.Description className="mt-1 text-sm text-gray-400">
+              <Dialog.Description className="mt-1 text-sm text-ink-muted">
                 Pick a wallet to connect. Vault stats stay readable without one.
               </Dialog.Description>
             </div>
             <Dialog.Close
               aria-label="Close"
-              className="rounded p-1 text-gray-400 transition-colors hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+              className="rounded p-1 text-ink-muted transition-colors hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
             >
               ✕
             </Dialog.Close>
@@ -100,7 +100,7 @@ export function WalletModal({ open, onOpenChange }: WalletModalProps) {
                     type="button"
                     onClick={() => handleConnect(connector)}
                     disabled={isPending}
-                    className="flex w-full items-center justify-between gap-3 rounded-lg border border-edge bg-surface-overlay px-4 py-3 text-left text-white transition-colors hover:border-accent disabled:cursor-not-allowed disabled:opacity-60 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                    className="flex w-full items-center justify-between gap-3 rounded-lg border border-edge-strong bg-surface-overlay px-4 py-3 text-left text-ink transition-colors hover:border-accent disabled:cursor-not-allowed disabled:bg-disabled-bg disabled:text-ink-muted focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                   >
                     <span className="font-medium">{connector.name}</span>
                     {connecting ? (
@@ -109,7 +109,7 @@ export function WalletModal({ open, onOpenChange }: WalletModalProps) {
                         className="h-4 w-4 animate-spin rounded-full border-2 border-accent border-t-transparent"
                       />
                     ) : (
-                      <span aria-hidden className="text-gray-500">
+                      <span aria-hidden className="text-ink-muted">
                         →
                       </span>
                     )}
@@ -120,7 +120,7 @@ export function WalletModal({ open, onOpenChange }: WalletModalProps) {
           </ul>
 
           {isPending && pendingName && (
-            <p role="status" className="mt-3 text-sm text-gray-300">
+            <p role="status" className="mt-3 text-sm text-ink">
               Connecting to {pendingName}…
             </p>
           )}
@@ -128,7 +128,7 @@ export function WalletModal({ open, onOpenChange }: WalletModalProps) {
           {error && (
             <div
               role="alert"
-              className="mt-3 rounded-lg border border-red-500/40 bg-red-500/10 px-3 py-2 text-sm text-red-200"
+              className="mt-3 rounded-lg border border-error/40 bg-error-soft px-3 py-2 text-sm text-error"
             >
               <span>{connectErrorMessage(error)}</span>
               <button
@@ -137,7 +137,7 @@ export function WalletModal({ open, onOpenChange }: WalletModalProps) {
                   reset()
                   setPendingName(null)
                 }}
-                className="ml-2 underline hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                className="ml-2 underline hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
               >
                 Retry
               </button>

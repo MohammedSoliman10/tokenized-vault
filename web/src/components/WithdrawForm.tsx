@@ -78,14 +78,14 @@ export function WithdrawForm() {
   return (
     <section
       aria-labelledby="withdraw-heading"
-      className="rounded-xl border border-edge bg-surface-raised p-4"
+      className="rounded-xl border border-edge bg-surface-raised p-4 shadow-sm"
     >
-      <h2 id="withdraw-heading" className="text-sm font-semibold text-white">
+      <h2 id="withdraw-heading" className="text-sm font-semibold text-ink">
         Withdraw
       </h2>
-      <p className="mt-1 text-xs text-gray-400">Shares in → tokens out (no approval needed).</p>
+      <p className="mt-1 text-xs text-ink-muted">Shares in → tokens out (no approval needed).</p>
 
-      <label className="mt-3 block text-xs text-gray-400" htmlFor="withdraw-amount">
+      <label className="mt-3 block text-xs text-ink-muted" htmlFor="withdraw-amount">
         Share amount
       </label>
       <div className="mt-1 flex gap-2">
@@ -97,19 +97,19 @@ export function WithdrawForm() {
           value={input}
           disabled={disabled || pending}
           onChange={(event) => setInput(event.target.value)}
-          className="w-full min-w-0 rounded-lg border border-edge bg-surface-overlay px-3 py-2 text-sm text-white placeholder:text-gray-600 disabled:opacity-60 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+          className="w-full min-w-0 rounded-lg border border-edge-strong bg-surface-overlay px-3 py-2 text-sm text-ink placeholder:text-ink-muted disabled:bg-disabled-bg disabled:text-ink-muted focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
         />
         <button
           type="button"
           onClick={fillMax}
           disabled={disabled || pending || !connected || stats.userShares === null}
-          className="shrink-0 rounded-lg border border-edge bg-surface-overlay px-3 py-2 text-xs font-medium text-gray-300 transition-colors hover:border-accent hover:text-white disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+          className="shrink-0 rounded-lg border border-edge-strong bg-surface-overlay px-3 py-2 text-xs font-medium text-ink transition-colors hover:border-accent hover:text-accent disabled:bg-disabled-bg disabled:text-ink-muted focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
         >
           Max
         </button>
       </div>
 
-      <p className="mt-2 min-h-4 text-xs text-gray-400" aria-live="polite">
+      <p className="mt-2 min-h-4 text-xs text-ink-muted" aria-live="polite">
         {estimate !== null && estimate > 0n
           ? `≈ ${formatTokenAmountExact(estimate)} tokens`
           : roundsToZero
@@ -118,12 +118,12 @@ export function WithdrawForm() {
       </p>
 
       {guard && (
-        <p role="alert" className="mt-1 text-xs text-amber-300">
+        <p role="alert" className="mt-1 text-xs text-warning">
           {guard}
         </p>
       )}
       {disabled && (
-        <p className="mt-1 text-xs text-gray-500">
+        <p className="mt-1 text-xs text-ink-muted">
           {wrongNetwork
             ? 'Switch your wallet to a supported network to withdraw.'
             : 'Vault is not deployed on this network.'}
@@ -134,7 +134,7 @@ export function WithdrawForm() {
         <button
           type="button"
           onClick={requestWalletConnect}
-          className="mt-3 w-full rounded-lg bg-accent px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-accent-hover focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+          className="mt-3 w-full rounded-lg bg-accent px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-accent-hover active:bg-accent-pressed focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
         >
           Connect wallet to withdraw
         </button>
@@ -143,7 +143,7 @@ export function WithdrawForm() {
           type="button"
           onClick={submit}
           disabled={!canWithdraw}
-          className="mt-3 w-full rounded-lg bg-accent px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+          className="mt-3 w-full rounded-lg bg-accent px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-accent-hover active:bg-accent-pressed disabled:cursor-not-allowed disabled:bg-disabled-bg disabled:text-ink-muted focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
         >
           {pending ? 'Withdrawing…' : 'Withdraw'}
         </button>
@@ -153,7 +153,7 @@ export function WithdrawForm() {
       {status === 'success' && (
         <div
           role="status"
-          className="mt-3 rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-3 py-2 text-xs text-emerald-200"
+          className="mt-3 rounded-lg border border-success/40 bg-success-soft px-3 py-2 text-xs text-success"
         >
           {outcome
             ? `Withdrew ${formatTokenAmountExact(outcome.shares)} shares → received ${formatTokenAmountExact(outcome.amount)} tokens.`
@@ -161,7 +161,7 @@ export function WithdrawForm() {
           <button
             type="button"
             onClick={reset}
-            className="ml-2 underline hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+            className="ml-2 underline hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
           >
             Dismiss
           </button>
@@ -172,13 +172,13 @@ export function WithdrawForm() {
       {status === 'error' && error && (
         <div
           role="alert"
-          className="mt-3 rounded-lg border border-red-500/40 bg-red-500/10 px-3 py-2 text-xs text-red-200"
+          className="mt-3 rounded-lg border border-error/40 bg-error-soft px-3 py-2 text-xs text-error"
         >
           {error}
           <button
             type="button"
             onClick={reset}
-            className="ml-2 underline hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+            className="ml-2 underline hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
           >
             Dismiss
           </button>
@@ -189,13 +189,13 @@ export function WithdrawForm() {
       {status === 'cancelled' && (
         <div
           role="status"
-          className="mt-3 rounded-lg border border-edge bg-surface-overlay px-3 py-2 text-xs text-gray-300"
+          className="mt-3 rounded-lg border border-edge bg-section px-3 py-2 text-xs text-ink-muted"
         >
           Transaction cancelled — no changes were made.
           <button
             type="button"
             onClick={reset}
-            className="ml-2 underline hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+            className="ml-2 underline hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
           >
             Dismiss
           </button>
